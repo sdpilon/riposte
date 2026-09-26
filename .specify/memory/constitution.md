@@ -1,19 +1,17 @@
 <!--
 Sync Impact Report
-- Version change: 1.0.0 → 1.1.0
+- Version change: 1.1.0 → 1.2.0
 - Modified principles: none renamed
 - Added sections:
-  - Development Practices: new bullet, "Audit for hardcoded personal-identity
-    strings, not just secrets" — promoted from engineering-practices.md after a
-    review of spec.md, engineering-practices.md, and tool-notes.md for anything
-    constitution-worthy that the initial ratification (1.0.0) missed.
+  - Development Practices: new bullet, "A committed-vs-personal boundary is
+    decided from day one, not discovered through friction" — promoted from a
+    lesson in repo-rater's own project memory (not engineering-practices.md or
+    tool-notes.md). Repo-rater's unclear boundary between tracked project docs
+    and untracked personal-process docs (CLAUDE.md vs CLAUDE.local.md,
+    settings.json vs settings.local.json) was one of three named frustrations
+    that triggered rebuilding as riposte in the first place, but the lesson
+    itself was never distilled into a portable principle until now.
 - Removed sections: none
-- Review outcome for the other two files: nothing else promoted.
-  engineering-practices.md self-describes as rationale for the existing
-  Development Practices bullets, not new commitments, and held up on inspection;
-  tool-notes.md is entirely stack-specific for a stack not yet chosen, and folding
-  any of it in here would contradict Principle VII (no LLM/vendor lock-in) and the
-  project's deliberate split between durable principles and tool-specific notes.
 - Templates requiring updates: none checked in this run — dependent templates/commands
   read this file at runtime and are out of scope for /speckit-constitution itself.
 - Follow-up TODOs: none.
@@ -133,6 +131,12 @@ model this tool exists to avoid.
   the self-hosted and credential-free-demo commitments (Principles I, VI) even when
   no actual secret is exposed — it silently deanonymizes the original author on an
   instance meant to be someone else's, or a demo meant to hold no one's real data.
+- **A committed-vs-personal boundary is decided from day one, not discovered
+  through friction.** What's tracked in the repo is project knowledge anyone
+  self-hosting or collaborating needs; personal process, machine-specific tooling,
+  and individual credential-wrapping habits stay in gitignored local-only files
+  from the start (e.g., a local-only settings/config split), not retrofitted after
+  they've already tangled together.
 
 ## Success Criteria
 
@@ -164,4 +168,4 @@ principles before implementation begins (not retrofitted after), per Principle I
 appears to conflict with a principle MUST be justified explicitly in the relevant
 plan, or the plan MUST be revised instead.
 
-**Version**: 1.1.0 | **Ratified**: 2026-09-25 | **Last Amended**: 2026-09-25
+**Version**: 1.2.0 | **Ratified**: 2026-09-25 | **Last Amended**: 2026-09-26
