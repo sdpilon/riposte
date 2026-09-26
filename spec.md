@@ -4,7 +4,7 @@ The product's current intended shape: what it does, for whom, and the
 concepts it's built from. This describes _what_ and _why_ — never a
 specific language, framework, database, or hosting target. Those are
 implementation decisions, made later, once a stack is chosen. See
-`constitution.md` for the durable principles this spec is built on.
+`.specify/memory/constitution.md` for the durable principles this spec is built on.
 
 ## Overview
 

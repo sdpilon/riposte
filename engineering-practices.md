@@ -1,8 +1,8 @@
 # Engineering practices
 
-Tool-agnostic reasoning behind `constitution.md`'s "Development goals" —
-not new commitments, but the _why_, with a concrete example of what goes
-wrong without each one. Mined from what actually happened building
+Tool-agnostic reasoning behind `.specify/memory/constitution.md`'s "Development
+Practices" — not new commitments, but the _why_, with a concrete example of what
+goes wrong without each one. Mined from what actually happened building
 repo-rater: real incidents, real decisions, real bugs. Nothing here names
 a specific language, framework, or database — see `tool-notes.md` for the
 tool-specific version of some of these same lessons.
