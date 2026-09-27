@@ -47,6 +47,28 @@ implementation layer, skipping the invariant layer entirely? That's a sign
 `policy-add`'s process wasn't followed and the rule may need a proper
 `docs/policies/` home.
 
+## Not every rule needs a mirror in every layer
+
+Before flagging a rule as missing from `CONTRIBUTING.md` or `CLAUDE.md`, check
+whether it actually has something meaningful to say to that audience — some rules are
+legitimately scoped to only one side of the human/agent split. `docs/policies/github.md`'s
+"Who merges" section already does this on purpose (it explicitly contrasts human vs.
+automation rather than stating one flat rule). A rule like "an agent must check
+before monitoring a PR it opened" has no real human-facing translation: a human
+contributor watching their own PR isn't asking anyone's permission, so there's no one
+to ask. Forcing a parallel sentence into the other layer anyway produces something
+that's technically present but doesn't make sense to that audience — worse than
+leaving it out, since it looks like coverage was checked when it wasn't actually
+thought through.
+
+The test: could you write a version of this rule for the other audience that tells
+them something they'd actually need to know and act on? If yes, it's a real gap —
+write it. If the honest answer is "there's nothing to say, this only applies because
+of the specific human-directs-agent relationship," that's not missing coverage — and
+the policy file itself should say so explicitly (so the scoping reads as deliberate,
+not as an oversight), rather than have the rule padded into a layer where it doesn't
+belong.
+
 ## Reporting and applying
 
 List every mismatch you find as a specific, concrete diff — quote the current text
