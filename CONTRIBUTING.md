@@ -1,0 +1,51 @@
+# Contributing to Riposte
+
+Riposte is currently a single-maintainer project, but these procedures hold regardless
+of whether that stays true. If you're an agent working in this repo, see `CLAUDE.md`
+for the same rules in agent-operational form — this document is the narrative version.
+
+## Before you start: which kind of change is this?
+
+- **Adds or changes product behavior** → work through Spec Kit end to end:
+  `speckit-specify`, then `speckit-clarify`, `speckit-plan`, `speckit-tasks`,
+  `speckit-implement`. See
+  [`docs/policies/feature-start.md`](docs/policies/feature-start.md).
+- **A trivial, unambiguous fix** (typo, obviously-correct one-line bug fix) → skip
+  straight to a normal commit. When in doubt, treat it as the first case.
+
+## Working with git
+
+- One logical change per commit; write messages in Conventional Commits style
+  (`type(scope): summary`), a single line unless a body is genuinely needed.
+- Any branch/PR-bound work gets its own worktree.
+- When a PR merges, delete its branch and worktree in the same action. The expected
+  end state after finishing any piece of work is a clean `main`: up to date with
+  `origin/main`, nothing to commit, nothing left behind.
+- Ask before adding a new top-level file or directory convention; a file that's
+  obviously part of already-approved work doesn't need a separate ask.
+- Use your own ambient git/GitHub credentials (SSH key, `gh auth login`). Nothing in
+  this repo should ever need a personal credential-wrapping setup to function.
+
+Full rationale: [`docs/policies/git.md`](docs/policies/git.md).
+
+## Opening a pull request
+
+Once real application code exists (see `CLAUDE.md` for whether that's true right
+now), every change — including a one-line doc fix — goes through a pull request:
+
+1. Run the full local quality gate (type-check, lint, format, test) — the same
+   commands CI runs — and confirm it's green before opening.
+2. Fill out `.github/PULL_REQUEST_TEMPLATE.md` section by section against what
+   actually changed. Don't write a freeform description instead.
+3. Open the PR against `main`.
+4. A human merges every PR, always — never an automated process, regardless of CI
+   status.
+
+Full rationale: [`docs/policies/github.md`](docs/policies/github.md).
+
+## Visibility: what goes in this repo
+
+If you're unsure whether something belongs in a committed file: would a stranger
+picking up this repo cold find it useful or need it? If yes, commit it. If no, it
+belongs in a gitignored local file or your own notes, not in the repo — see
+[`docs/policies/visibility.md`](docs/policies/visibility.md) for the full test.
