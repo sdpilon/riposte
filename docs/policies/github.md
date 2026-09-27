@@ -14,6 +14,17 @@ alone." Carving out a docs-only exception once code exists would just be a secon
 unenforced convention sitting next to the enforced one — real branch protection is
 binary at the repo level, so the policy should be too.
 
+## Opening a PR is its own authorization
+
+**Pushing a branch does not by itself authorize opening a pull request for it —
+those are two separate actions, and pushing never implies the other.** A pushed
+branch might be a checkpoint, a work-in-progress save, or waiting on something else
+entirely; opening the PR is always its own, separate decision.
+
+Rationale: same shape as "Who merges" below — each step that could advance or
+publish work needs its own explicit go, not authorization inherited from the step
+before it.
+
 ## Checks before opening a PR
 
 **The full local quality gate — type-checking, linting, formatting, tests — must pass
@@ -41,5 +52,8 @@ call the tooling shouldn't be trusted to make on its own.
 
 ## After opening a PR
 
-Always ask whether the PR should be monitored (e.g. for CI status) — never start
-monitoring unprompted, and never skip asking either.
+**An agent that opens a PR must not assume it should also monitor it afterward —
+that's checked for explicitly, never started unprompted.** A human contributor
+watching their own PR isn't asking anyone's permission; this specifically governs
+automation acting on someone else's behalf, not a rule every audience needs its own
+version of.

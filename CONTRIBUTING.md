@@ -31,7 +31,9 @@ Full rationale: [`docs/policies/git.md`](docs/policies/git.md).
 ## Opening a pull request
 
 Once real application code exists (see `CLAUDE.md` for whether that's true right
-now), every change — including a one-line doc fix — goes through a pull request:
+now), every change — including a one-line doc fix — goes through a pull request.
+Pushing a branch doesn't by itself mean it's time to open the PR — that's always a
+separate decision, never assumed just because a branch exists.
 
 1. Run the full local quality gate (type-check, lint, format, test) — the same
    commands CI runs — and confirm it's green before opening.
