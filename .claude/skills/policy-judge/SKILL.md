@@ -1,11 +1,11 @@
 ---
 name: policy-judge
-description: Decide whether a proposed rule for this repo — "we should always/never do X", a new convention, a house rule — belongs in the committed policy layer (docs/policies/, CONTRIBUTING.md, CLAUDE.md) or is actually personal/agent-collaboration preference that belongs in memory or CLAUDE.local.md instead. Use this whenever it's genuinely unclear which bucket a new rule belongs in, including when you (Claude) are about to write a new procedural instruction into a repo file and aren't sure it's really a repo-wide policy rather than just how this person likes to work. Hands off to policy-add once something is judged to be a real policy.
+description: Decide whether a proposed rule for this repo — "we should always/never do X", a new convention, a house rule — belongs in the committed policy layer (.policy/, CONTRIBUTING.md, CLAUDE.md) or is actually personal/agent-collaboration preference that belongs in memory or CLAUDE.local.md instead. Use this whenever it's genuinely unclear which bucket a new rule belongs in, including when you (Claude) are about to write a new procedural instruction into a repo file and aren't sure it's really a repo-wide policy rather than just how this person likes to work. Hands off to policy-add once something is judged to be a real policy.
 ---
 
 # Judging policy vs. preference
 
-Not every rule someone wants followed belongs in this repo. `docs/policies/visibility.md`
+Not every rule someone wants followed belongs in this repo. `.policy/visibility.md`
 draws the line: a committed file is for anything a stranger picking up this repo cold
 — a future contributor, a different agent — would need or benefit from. Something
 that's really about how one specific person wants to collaborate with an agent
@@ -14,7 +14,7 @@ it in a repo file anyway just adds noise for every other reader.
 
 This is a real judgment call, not a keyword match, and it's been gotten wrong before
 in this project's own history: "confirm the user is happy with a change before
-committing it" was first drafted straight into `docs/policies/git.md`, `CLAUDE.md`,
+committing it" was first drafted straight into `.policy/git.md`, `CLAUDE.md`,
 and `CONTRIBUTING.md` — then, on reflection, recognized as being about how one person
 wants to review agent work, not a property of this repo, and moved to memory instead.
 That's the case to have in mind when something feels ambiguous.
@@ -32,7 +32,7 @@ Ask two questions, in order:
    next check before concluding that.
 
 2. **Does an existing policy already have the same shape?** Look for a structural
-   twin. `docs/policies/github.md` already says "never open a PR unasked just because
+   twin. `.policy/github.md` already says "never open a PR unasked just because
    a branch was pushed — separate authorizations." If the proposed rule is really
    "action A doesn't imply authorization for action B" in different clothes, it's
    policy-shaped even if the first framing sounded like preference — reframe it to
@@ -65,11 +65,11 @@ the verdict itself turns out right.
 ## Placing the verdict
 
 **Judged as policy** → hand off to `policy-add` to actually create/extend the
-relevant `docs/policies/<topic>.md`, `CONTRIBUTING.md`, and `CLAUDE.md` sections. Don't
+relevant `.policy/<topic>.md`, `CONTRIBUTING.md`, and `CLAUDE.md` sections. Don't
 duplicate that process here.
 
 **Judged as not policy** → it splits further, by durability and relevance, same as
-`docs/policies/visibility.md` describes:
+`.policy/visibility.md` describes:
 
 - **Agent-collaboration style** (how closely to review work, communication
   preferences, risk tolerance) → a memory file in this project's memory directory,

@@ -9,7 +9,7 @@ for the same rules in agent-operational form — this document is the narrative 
 - **Adds or changes product behavior** → work through Spec Kit end to end:
   `speckit-specify`, then `speckit-clarify`, `speckit-plan`, `speckit-tasks`,
   `speckit-implement`. See
-  [`docs/policies/feature-start.md`](docs/policies/feature-start.md).
+  [`.policy/feature-start.md`](.policy/feature-start.md).
 - **A trivial, unambiguous fix** (typo, obviously-correct one-line bug fix) → skip
   straight to a normal commit. When in doubt, treat it as the first case.
 
@@ -26,7 +26,7 @@ for the same rules in agent-operational form — this document is the narrative 
 - Use your own ambient git/GitHub credentials (SSH key, `gh auth login`). Nothing in
   this repo should ever need a personal credential-wrapping setup to function.
 
-Full rationale: [`docs/policies/git.md`](docs/policies/git.md).
+Full rationale: [`.policy/git.md`](.policy/git.md).
 
 ## Opening a pull request
 
@@ -43,11 +43,11 @@ separate decision, never assumed just because a branch exists.
 4. A human merges every PR, always — never an automated process, regardless of CI
    status.
 
-Full rationale: [`docs/policies/github.md`](docs/policies/github.md).
+Full rationale: [`.policy/github.md`](.policy/github.md).
 
 ## Visibility: what goes in this repo
 
 If you're unsure whether something belongs in a committed file: would a stranger
 picking up this repo cold find it useful or need it? If yes, commit it. If no, it
 belongs in a gitignored local file or your own notes, not in the repo — see
-[`docs/policies/visibility.md`](docs/policies/visibility.md) for the full test.
+[`.policy/visibility.md`](.policy/visibility.md) for the full test.

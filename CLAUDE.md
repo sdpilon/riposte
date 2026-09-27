@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 Agent-operational form of this repo's process policies. `CONTRIBUTING.md` is the
-human-readable narrative of the same rules; `docs/policies/*.md` are the underlying
+human-readable narrative of the same rules; `.policy/*.md` are the underlying
 policies with their rationale. This file exists specifically so these rules persist
 across sessions without depending on this conversation or on Claude's own memory
 system staying intact.
@@ -19,7 +19,7 @@ and leave the old carve-out written down somewhere for a future session to trip 
 2. In this file, drop the "(once the docs-only exception above has ended)" qualifier
    from the `## GitHub` heading below — it becomes a plain `## GitHub` section with no
    conditional framing.
-3. In [`docs/policies/github.md`](docs/policies/github.md), rewrite "When a pull
+3. In [`.policy/github.md`](.policy/github.md), rewrite "When a pull
    request is required" to state the PR-required rule unconditionally — remove "Until
    then (the current docs-only phase), commits go straight to `main` — see `CLAUDE.md`
    for the live status of that interim exception and what ends it" and the rationale
@@ -72,6 +72,6 @@ note itself is gone.
 
 Before creating or committing any file: would a stranger picking up this repo cold
 find it useful, or need it? If no, it doesn't belong in a committed file — see
-`docs/policies/visibility.md`. Durable-but-personal content goes in `CLAUDE.local.md`
+`.policy/visibility.md`. Durable-but-personal content goes in `CLAUDE.local.md`
 (gitignored); anything not yet settled stays in session/project memory until it's an
 actual decided policy, not this file.

@@ -39,7 +39,7 @@ its behalf.
 ## Graduating from memory to a committed file
 
 A realization starts as memory when it isn't fully decided yet. It graduates into
-`docs/policies/`, `CONTRIBUTING.md`, or `CLAUDE.md` once it's an actual decided
+`.policy/`, `CONTRIBUTING.md`, or `CLAUDE.md` once it's an actual decided
 policy — not a floated idea. Once it's committed, the memory entry is deleted or
 collapsed to a one-line pointer; the repo file becomes the one source of truth, so the
 two never quietly drift apart.

@@ -1,11 +1,11 @@
 ---
 name: policy-sync
-description: Check whether CONTRIBUTING.md and CLAUDE.md still accurately reflect docs/policies/*.md, and propagate any changes to a policy file into its two implementation layers. Use this any time a file under docs/policies/ was just edited, before finishing a task that touched one, or when the user asks to check the docs are consistent, that CLAUDE.md/CONTRIBUTING.md match policy, or generally "sync the docs" / "check for drift" / "did I miss updating something." This kind of mismatch is silent and no test will ever catch it, so lean toward running this proactively after any docs/policies/ edit rather than waiting to be asked.
+description: Check whether CONTRIBUTING.md and CLAUDE.md still accurately reflect .policy/*.md, and propagate any changes to a policy file into its two implementation layers. Use this any time a file under .policy/ was just edited, before finishing a task that touched one, or when the user asks to check the docs are consistent, that CLAUDE.md/CONTRIBUTING.md match policy, or generally "sync the docs" / "check for drift" / "did I miss updating something." This kind of mismatch is silent and no test will ever catch it, so lean toward running this proactively after any .policy/ edit rather than waiting to be asked.
 ---
 
 # Syncing policy layers
 
-`docs/policies/*.md` is the source of truth for *what the rule is*. `CONTRIBUTING.md`
+`.policy/*.md` is the source of truth for *what the rule is*. `CONTRIBUTING.md`
 and `CLAUDE.md` are derived from it — a human-facing narrative and an
 agent-operational form of the same rules. When a policy file changes and its two
 derived sections don't get updated in the same breath, the repo ends up with two
@@ -16,9 +16,9 @@ looking.
 
 ## How to find what should match what
 
-Each `docs/policies/<topic>.md` is referenced from `CONTRIBUTING.md` and `CLAUDE.md`
-via a markdown link (e.g. `[docs/policies/git.md](docs/policies/git.md)` or
-`docs/policies/visibility.md`). Use those links to build the correspondence — the
+Each `.policy/<topic>.md` is referenced from `CONTRIBUTING.md` and `CLAUDE.md`
+via a markdown link (e.g. `[.policy/git.md](.policy/git.md)` or
+`.policy/visibility.md`). Use those links to build the correspondence — the
 section(s) in `CONTRIBUTING.md`/`CLAUDE.md` that link to a given policy file are the
 ones that should agree with it.
 
@@ -33,11 +33,11 @@ For each policy file, check three directions:
    condition that used to apply and doesn't anymore? `CLAUDE.md`'s "Current phase"
    section is the clearest example in this repo: it names exactly what else needs
    editing when it's deleted (a parenthetical in `CLAUDE.md`'s own `## GitHub`
-   heading, a sentence in `docs/policies/github.md`, a parenthetical in
+   heading, a sentence in `.policy/github.md`, a parenthetical in
    `CONTRIBUTING.md`). If you're running this skill because that phase just ended,
    follow its own listed steps directly rather than treating it as generic
    drift-checking.
-3. **Missing coverage.** Is there a `docs/policies/<topic>.md` file with no
+3. **Missing coverage.** Is there a `.policy/<topic>.md` file with no
    corresponding section in `CONTRIBUTING.md` or `CLAUDE.md` at all — meaning it was
    added without going through the full three-layer process (see `policy-add`)?
 
@@ -45,13 +45,13 @@ Also check the reverse direction once: is there a rule stated in `CONTRIBUTING.m
 `CLAUDE.md` that has no backing policy file — something that was added directly to an
 implementation layer, skipping the invariant layer entirely? That's a sign
 `policy-add`'s process wasn't followed and the rule may need a proper
-`docs/policies/` home.
+`.policy/` home.
 
 ## Not every rule needs a mirror in every layer
 
 Before flagging a rule as missing from `CONTRIBUTING.md` or `CLAUDE.md`, check
 whether it actually has something meaningful to say to that audience — some rules are
-legitimately scoped to only one side of the human/agent split. `docs/policies/github.md`'s
+legitimately scoped to only one side of the human/agent split. `.policy/github.md`'s
 "Who merges" section already does this on purpose (it explicitly contrasts human vs.
 automation rather than stating one flat rule). A rule like "an agent must check
 before monitoring a PR it opened" has no real human-facing translation: a human
@@ -77,9 +77,9 @@ Present the full list and wait for a go-ahead before writing anything; propagati
 already-decided policy into other layers still means editing files, and the user gets
 to see exactly what's about to change before it does.
 
-Once approved, apply the edits and commit per `docs/policies/git.md` (one logical
+Once approved, apply the edits and commit per `.policy/git.md` (one logical
 change — a sync pass across several files for one underlying cause is still one
-commit) and `docs/policies/github.md` (check `CLAUDE.md`'s "Current phase" section for
+commit) and `.policy/github.md` (check `CLAUDE.md`'s "Current phase" section for
 whether a PR is currently required).
 
 If you find zero mismatches, say so plainly — a clean sync check is a useful result,
