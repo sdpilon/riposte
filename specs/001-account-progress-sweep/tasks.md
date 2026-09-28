@@ -45,13 +45,13 @@ This is the first *real application code* in this repo. Per `CLAUDE.md`'s
 all of it front-loaded per plan.md's Development Practices note, so CI and
 preview infrastructure exist before the feature's own code does.
 
-- [ ] T001 Initialize the Next.js (App Router, TypeScript) project scaffold per plan.md's Project Structure (`app/layout.tsx`, `package.json`, `tsconfig.json`, `next.config.*`), using pnpm
-- [ ] T002 [P] Install and configure Tailwind CSS, Radix UI primitives, and Lucide icons (`tailwind.config.ts`, `app/globals.css`)
-- [ ] T003 [P] Configure ESLint (`next lint`, core-web-vitals ruleset) and Prettier (`eslint.config.mjs`, `.prettierrc`)
-- [ ] T004 [P] Configure Vitest for unit/integration tests (`vitest.config.ts`)
-- [ ] T005 [P] Configure Drizzle ORM + drizzle-kit against a Postgres connection string, using the `neon-http` adapter (research.md's "Database / query layer") in `lib/db/client.ts`, `drizzle.config.ts`
-- [ ] T006 Add `.env.example` documenting `DATABASE_URL`, `GITHUB_TOKEN`, and the configured LLM provider's API key (quickstart.md's Prerequisites)
-- [ ] T007 Add `.github/workflows/ci.yml` running `pnpm typecheck`, `pnpm lint`, `pnpm format:check`, `pnpm test` as a required status check (constitution: "automated quality gate blocks every merge from day one")
+- [X] T001 Initialize the Next.js (App Router, TypeScript) project scaffold per plan.md's Project Structure (`app/layout.tsx`, `package.json`, `tsconfig.json`, `next.config.*`), using pnpm
+- [X] T002 [P] Install and configure Tailwind CSS, Radix UI primitives, and Lucide icons (`tailwind.config.ts`, `app/globals.css`)
+- [X] T003 [P] Configure ESLint (`next lint`, core-web-vitals ruleset) and Prettier (`eslint.config.mjs`, `.prettierrc`)
+- [X] T004 [P] Configure Vitest for unit/integration tests (`vitest.config.ts`)
+- [X] T005 [P] Configure Drizzle ORM + drizzle-kit against a Postgres connection string, using the `neon-http` adapter (research.md's "Database / query layer") in `lib/db/client.ts`, `drizzle.config.ts`
+- [X] T006 Add `.env.example` documenting `DATABASE_URL`, `GITHUB_TOKEN`, and the configured LLM provider's API key (quickstart.md's Prerequisites)
+- [X] T007 Add `.github/workflows/ci.yml` running `pnpm typecheck`, `pnpm lint`, `pnpm format:check`, `pnpm test` as a required status check (constitution: "automated quality gate blocks every merge from day one")
 - [ ] T008 Run `vercel link` + `vercel git connect` to connect this GitHub repo to the Vercel project (automatic Production/Preview Deployments), then `vercel integration add neon` to provision a Neon Postgres resource and connect it across `production`/`preview`/`development` (auto-syncs env vars via `vercel env pull`) — fully CLI-scriptable, no dashboard required for this step; branch-per-preview-deployment specifically is unconfirmed as automatic-by-default vs. requiring one dashboard toggle (see T026)
 
 ---
@@ -63,10 +63,10 @@ stories depend on.
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete.
 
-- [ ] T009 Define the Drizzle schema for `tracked_repos`, `activity_records`, `assessments`, `runs`, `run_items` per data-model.md — including `tracked_repos.inclusion_state` (enum `included`/`excluded`), `tracked_repos.exclusion_reason` (nullable text, one of `fork`/`archived`/`no_readme`/`no_activity`, required non-null when excluded), `activity_records`' unique `(repo_id, kind, external_id)`, `assessments.evidence_refs` (`activity_records.id[]`), `assessments.inputs_fingerprint`, and the partial unique index on `runs(status) WHERE status = 'in_progress'` (FR-011) — file: `lib/db/schema.ts`
-- [ ] T010 Generate and apply the initial Drizzle migration for the schema above — `lib/db/migrations/`
-- [ ] T011 [P] Implement a read-only Octokit wrapper — repo listing, commits, issues, pull requests, README contents only, with rate-limit/retry handling (Constitution Principle III, NON-NEGOTIABLE: no mutating call anywhere in this module) — file: `lib/github/client.ts`
-- [ ] T012 [P] Implement environment/config loading for `DATABASE_URL`, `GITHUB_TOKEN`, and the LLM provider setting — file: `lib/config/env.ts`
+- [X] T009 Define the Drizzle schema for `tracked_repos`, `activity_records`, `assessments`, `runs`, `run_items` per data-model.md — including `tracked_repos.inclusion_state` (enum `included`/`excluded`), `tracked_repos.exclusion_reason` (nullable text, one of `fork`/`archived`/`no_readme`/`no_activity`, required non-null when excluded), `activity_records`' unique `(repo_id, kind, external_id)`, `assessments.evidence_refs` (`activity_records.id[]`), `assessments.inputs_fingerprint`, and the partial unique index on `runs(status) WHERE status = 'in_progress'` (FR-011) — file: `lib/db/schema.ts`
+- [X] T010 Generate and apply the initial Drizzle migration for the schema above — `lib/db/migrations/`
+- [X] T011 [P] Implement a read-only Octokit wrapper — repo listing, commits, issues, pull requests, README contents only, with rate-limit/retry handling (Constitution Principle III, NON-NEGOTIABLE: no mutating call anywhere in this module) — file: `lib/github/client.ts`
+- [X] T012 [P] Implement environment/config loading for `DATABASE_URL`, `GITHUB_TOKEN`, and the LLM provider setting — file: `lib/config/env.ts`
 
 **Checkpoint**: Foundation ready — User Story 1 can now begin.
 
@@ -86,20 +86,20 @@ records (SC-003).
 
 ### Tests for User Story 1
 
-- [ ] T013 [P] [US1] Contract test for `POST /api/runs` (202 on trigger, 409 on concurrent trigger) and `GET /api/runs/:runId` (200 with progress fields, 404 unknown id) per contracts/runs-api.md — file: `tests/contract/runs-api.test.ts`
-- [ ] T014 [P] [US1] Unit test for FR-006 change-detection: identical README + activity → `inputs_fingerprint` match → no new assessment; any new commit/issue/PR → fingerprint mismatch → new assessment triggered (no accumulation threshold, per spec.md's Clarifications) — file: `tests/unit/change-detection.test.ts`
+- [X] T013 [P] [US1] Contract test for `POST /api/runs` (202 on trigger, 409 on concurrent trigger) and `GET /api/runs/:runId` (200 with progress fields, 404 unknown id) per contracts/runs-api.md — file: `tests/contract/runs-api.test.ts`
+- [X] T014 [P] [US1] Unit test for FR-006 change-detection: identical README + activity → `inputs_fingerprint` match → no new assessment; any new commit/issue/PR → fingerprint mismatch → new assessment triggered (no accumulation threshold, per spec.md's Clarifications) — file: `tests/unit/change-detection.test.ts`
 
 ### Implementation for User Story 1
 
-- [ ] T015 [US1] Implement repo classification: fork / archived / no-README / "no activity at all" (zero commits, issues, or PRs ever — spec.md's Assumptions) each map to a specific `exclusion_reason`; everything else is `included` (FR-002) — file: `lib/repos/classify.ts`
-- [ ] T016 [US1] Implement account-wide discovery: enumerate every repo via `lib/github/client.ts` (FR-001), upsert `tracked_repos` (via `classify.ts`) and `activity_records`, working identically for public and private repos (FR-009) — file: `lib/repos/discovery.ts` (depends on T011, T015)
-- [ ] T017 [US1] Implement FR-006 change-detection using T014's fixture: compute `inputs_fingerprint` from README + activity_records, compare to the repo's most recent assessment — file: `lib/assessment/change-detection.ts` (depends on T009, T014)
-- [ ] T018 [US1] Implement the evidence-grounded assessment call via the Vercel AI SDK's provider abstraction (Constitution Principle VII, NON-NEGOTIABLE — no vendor-specific code path): produce `completion_estimate`, `status_tier`, `verdict`, `evidence_refs`; reject (do not insert) an assessment with empty `evidence_refs` (FR-005) — file: `lib/assessment/provider.ts`
-- [ ] T019 [US1] Implement the resumable run state machine (research.md): on trigger, create one `runs` row and one `run_items` row per discovered repo; on each invocation, process not-yet-processed `run_items` within the time budget — calling T017 to skip unchanged repos (`outcome = 'skipped_unchanged'`) and T018 to generate new assessments — updating each item's outcome as it finishes, until none remain, then mark the run `completed` (or `partial` on a stopped/rate-limited run — Edge Cases) — file: `lib/runs/runner.ts` (depends on T016, T017, T018)
-- [ ] T020 [US1] Implement `POST /api/runs`: invoke `runner.ts` to create a run and return `202` immediately (FR-010); return `409` with the existing run's id when the database's partial unique index rejects a concurrent insert (FR-011) — file: `app/api/runs/route.ts` (depends on T019)
-- [ ] T021 [US1] Implement `GET /api/runs/:runId`: return the run's current status/progress fields per contracts/runs-api.md — file: `app/api/runs/[runId]/route.ts` (depends on T019)
-- [ ] T022 [US1] Wire a Vercel Cron trigger to advance any `in_progress` run (research.md's chunked-cron design) — files: `vercel.json` (cron schedule), a cron-invoked route reusing T019's advance logic (depends on T019, T020)
-- [ ] T023 [US1] Build the dashboard listing page rendering each eligible repo's status tier, completion estimate, and verdict text (no sorting/freshness — that's spec 002) — files: `app/(dashboard)/page.tsx`, `components/repo-list/` (depends on T009, T018)
+- [X] T015 [US1] Implement repo classification: fork / archived / no-README / "no activity at all" (zero commits, issues, or PRs ever — spec.md's Assumptions) each map to a specific `exclusion_reason`; everything else is `included` (FR-002) — file: `lib/repos/classify.ts`
+- [X] T016 [US1] Implement account-wide discovery: enumerate every repo via `lib/github/client.ts` (FR-001), upsert `tracked_repos` (via `classify.ts`) and `activity_records`, working identically for public and private repos (FR-009) — file: `lib/repos/discovery.ts` (depends on T011, T015)
+- [X] T017 [US1] Implement FR-006 change-detection using T014's fixture: compute `inputs_fingerprint` from README + activity_records, compare to the repo's most recent assessment — file: `lib/assessment/change-detection.ts` (depends on T009, T014)
+- [X] T018 [US1] Implement the evidence-grounded assessment call via the Vercel AI SDK's provider abstraction (Constitution Principle VII, NON-NEGOTIABLE — no vendor-specific code path): produce `completion_estimate`, `status_tier`, `verdict`, `evidence_refs`; reject (do not insert) an assessment with empty `evidence_refs` (FR-005) — file: `lib/assessment/provider.ts`
+- [X] T019 [US1] Implement the resumable run state machine (research.md): on trigger, create one `runs` row and one `run_items` row per discovered repo; on each invocation, process not-yet-processed `run_items` within the time budget — calling T017 to skip unchanged repos (`outcome = 'skipped_unchanged'`) and T018 to generate new assessments — updating each item's outcome as it finishes, until none remain, then mark the run `completed` (or `partial` on a stopped/rate-limited run — Edge Cases) — file: `lib/runs/runner.ts` (depends on T016, T017, T018)
+- [X] T020 [US1] Implement `POST /api/runs`: invoke `runner.ts` to create a run and return `202` immediately (FR-010); return `409` with the existing run's id when the database's partial unique index rejects a concurrent insert (FR-011) — file: `app/api/runs/route.ts` (depends on T019)
+- [X] T021 [US1] Implement `GET /api/runs/:runId`: return the run's current status/progress fields per contracts/runs-api.md — file: `app/api/runs/[runId]/route.ts` (depends on T019)
+- [X] T022 [US1] Wire a Vercel Cron trigger to advance any `in_progress` run (research.md's chunked-cron design) — files: `vercel.json` (cron schedule), a cron-invoked route reusing T019's advance logic (depends on T019, T020)
+- [X] T023 [US1] Build the dashboard listing page rendering each eligible repo's status tier, completion estimate, and verdict text (no sorting/freshness — that's spec 002) — files: `app/(dashboard)/page.tsx`, `components/repo-list/` (depends on T009, T018)
 
 **Checkpoint**: User Story 1 is fully functional and independently
 testable per its Independent Test above.
@@ -122,11 +122,11 @@ not computing it for the first time.
 
 ### Tests for User Story 2
 
-- [ ] T024 [P] [US2] Integration test: after a population run, a fork, an archived repo, and a no-README repo in the same account each show the correct, specific `exclusion_reason` (FR-002, FR-003) — file: `tests/integration/exclusion-reasons.test.ts`
+- [X] T024 [P] [US2] Integration test: after a population run, a fork, an archived repo, and a no-README repo in the same account each show the correct, specific `exclusion_reason` (FR-002, FR-003) — file: `tests/integration/exclusion-reasons.test.ts`
 
 ### Implementation for User Story 2
 
-- [ ] T025 [US2] Surface `exclusion_reason` in the dashboard listing for any repo with `inclusion_state = 'excluded'`, distinct from a generic excluded flag (FR-003) — file: `components/repo-list/` (extends T023)
+- [X] T025 [US2] Surface `exclusion_reason` in the dashboard listing for any repo with `inclusion_state = 'excluded'`, distinct from a generic excluded flag (FR-003) — file: `components/repo-list/` (extends T023)
 
 **Checkpoint**: User Stories 1 and 2 both work independently.
 
@@ -135,8 +135,8 @@ not computing it for the first time.
 ## Phase 5: Polish & Cross-Cutting Concerns
 
 - [ ] T026 [P] Verify Neon's Vercel-native integration against our own setup (research.md's flagged "to verify, not assumed" items): (a) that each Preview Deployment actually gets its own `preview/<git-branch>` database branch rather than sharing one, not just a dashboard assumption from T008, and (b) that env-var propagation timing holds up (no build connecting to the main branch before its own branch's `DATABASE_URL` is injected) — manual verification, not code
-- [ ] T027 [P] Confirm `pnpm typecheck && pnpm lint && pnpm format:check && pnpm test` matches CI (T007) exactly, per `github.md`'s pre-PR requirement
-- [ ] T028 Run through quickstart.md's validation steps end-to-end against the implemented feature
+- [X] T027 [P] Confirm `pnpm typecheck && pnpm lint && pnpm format:check && pnpm test` matches CI (T007) exactly, per `github.md`'s pre-PR requirement
+- [ ] T028 Run through quickstart.md's validation steps end-to-end against the implemented feature — **partially done**: `pnpm install`/migrations/build/lint/typecheck/test all verified locally; the actual live run-through (steps 1–5, needing a real `DATABASE_URL`, `GITHUB_TOKEN`, and LLM credential) could not be done in this sandboxed implementation session — do this once real credentials are available, before merging
 
 ---
 
