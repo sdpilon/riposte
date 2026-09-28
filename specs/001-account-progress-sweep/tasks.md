@@ -52,7 +52,7 @@ preview infrastructure exist before the feature's own code does.
 - [ ] T005 [P] Configure Drizzle ORM + drizzle-kit against a Postgres connection string, using the `neon-http` adapter (research.md's "Database / query layer") in `lib/db/client.ts`, `drizzle.config.ts`
 - [ ] T006 Add `.env.example` documenting `DATABASE_URL`, `GITHUB_TOKEN`, and the configured LLM provider's API key (quickstart.md's Prerequisites)
 - [ ] T007 Add `.github/workflows/ci.yml` running `pnpm typecheck`, `pnpm lint`, `pnpm format:check`, `pnpm test` as a required status check (constitution: "automated quality gate blocks every merge from day one")
-- [ ] T008 Link the Vercel project to this GitHub repo (automatic Production/Preview Deployments) and install Neon's Vercel-native integration for branch-per-preview databases (research.md's "Deployment automation" — dashboard setup, not code; note the flagged env-var-propagation caveat for later verification in T026)
+- [ ] T008 Run `vercel link` + `vercel git connect` to connect this GitHub repo to the Vercel project (automatic Production/Preview Deployments), then `vercel integration add neon` to provision a Neon Postgres resource and connect it across `production`/`preview`/`development` (auto-syncs env vars via `vercel env pull`) — fully CLI-scriptable, no dashboard required for this step; branch-per-preview-deployment specifically is unconfirmed as automatic-by-default vs. requiring one dashboard toggle (see T026)
 
 ---
 
@@ -134,7 +134,7 @@ not computing it for the first time.
 
 ## Phase 5: Polish & Cross-Cutting Concerns
 
-- [ ] T026 [P] Verify Neon's Vercel-native integration env-var propagation actually holds up against our own setup (research.md's flagged "to verify, not assumed" item) — manual verification, not code
+- [ ] T026 [P] Verify Neon's Vercel-native integration against our own setup (research.md's flagged "to verify, not assumed" items): (a) that each Preview Deployment actually gets its own `preview/<git-branch>` database branch rather than sharing one, not just a dashboard assumption from T008, and (b) that env-var propagation timing holds up (no build connecting to the main branch before its own branch's `DATABASE_URL` is injected) — manual verification, not code
 - [ ] T027 [P] Confirm `pnpm typecheck && pnpm lint && pnpm format:check && pnpm test` matches CI (T007) exactly, per `github.md`'s pre-PR requirement
 - [ ] T028 Run through quickstart.md's validation steps end-to-end against the implemented feature
 
