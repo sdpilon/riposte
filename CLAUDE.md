@@ -6,33 +6,6 @@ policies with their rationale. This file exists specifically so these rules pers
 across sessions without depending on this conversation or on Claude's own memory
 system staying intact.
 
-## Current phase
-
-**Docs-only — no application code yet.** Commits go straight to `main`, no PR
-required. This is a deliberate, time-boxed exception, not the standing convention.
-
-**This exception ends the moment real application code lands in this repo.** At that
-point, before anything else, remove every mention of it — don't just switch behavior
-and leave the old carve-out written down somewhere for a future session to trip over:
-
-1. Delete this "Current phase" section from this file entirely.
-2. In this file, drop the "(once the docs-only exception above has ended)" qualifier
-   from the `## GitHub` heading below — it becomes a plain `## GitHub` section with no
-   conditional framing.
-3. In [`.policy/github.md`](.policy/github.md), rewrite "When a pull
-   request is required" to state the PR-required rule unconditionally — remove "Until
-   then (the current docs-only phase), commits go straight to `main` — see `CLAUDE.md`
-   for the live status of that interim exception and what ends it" and the rationale
-   sentence about "carving out a docs-only exception."
-4. In [`CONTRIBUTING.md`](CONTRIBUTING.md), remove the parenthetical "(see `CLAUDE.md`
-   for whether that's true right now)" from "Opening a pull request" — the PR
-   requirement is no longer conditional, so it shouldn't read as if it might not be.
-
-Do this as one commit, in the same change that introduces the first real application
-code — not a follow-up. Never rely on "treat this as stale" as a substitute for
-actually deleting it; a fresh session has no way to know a note is stale unless the
-note itself is gone.
-
 ## Which change needs Spec Kit
 
 - Adds/changes product behavior → full flow: `speckit-specify` → `speckit-clarify` →
@@ -55,7 +28,7 @@ note itself is gone.
 - Use only the operator's own ambient credentials for git/GitHub operations — never
   read from or depend on a repo-local secret, script, or personal alias.
 
-## GitHub (once the docs-only exception above has ended)
+## GitHub
 
 - Every commit goes through a PR, no exceptions by file type.
 - Before opening: run the full local quality gate (type-check, lint, format, test) —

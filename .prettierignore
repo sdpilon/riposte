@@ -1,0 +1,16 @@
+.next/
+node_modules/
+coverage/
+drizzle/
+pnpm-lock.yaml
+
+# Drizzle-generated migration metadata — not hand-authored.
+lib/db/migrations/meta/
+
+# This feature's quality gate covers the application, not the project's
+# pre-existing process docs/spec artifacts, which follow their own
+# conventions (see .policy/, CONTRIBUTING.md) predating this feature.
+.claude/
+.specify/
+specs/
+*.md
