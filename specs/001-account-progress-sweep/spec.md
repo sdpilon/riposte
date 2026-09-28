@@ -8,6 +8,14 @@
 
 **Input**: User description: "Account-wide progress sweep: as the account owner, I want to see every one of my repos with a completion estimate and status tier, so I can tell at a glance which projects are on track, at risk, or stalled without opening each one. This is User Story 1 (P1) from PRD.md — connect a GitHub account, trigger a population run, and see a populated dashboard listing with a status tier and completion estimate per repo. A repo with no README is auto-excluded with the specific reason visible."
 
+## Clarifications
+
+### Session 2026-09-27
+
+- Q: Should a population run happen in the background (asynchronously) while the user watches progress land incrementally, or should the trigger block until the whole run finishes? → A: Asynchronous — run kicked off, user watches results populate incrementally via the run record.
+- Q: If someone triggers a population run while one is already in progress, what should happen? → A: Reject the new trigger while one is in progress, pointing at the existing run.
+- Q: How much change to a repo since its last assessment should be enough to trigger a new one — any new activity at all, or only once some amount accumulates? → A: Any new commit, issue, or PR activity since the last assessment counts as "changed."
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Populate the account with real assessments (Priority: P1)
@@ -90,6 +98,9 @@ inspect the repo directly on GitHub to understand why.
   means — a repo with real historical activity that has since gone quiet is
   a "stalled" verdict, not an exclusion, since surfacing exactly that
   distinction is the product's reason to exist.
+- A population run is triggered while one is already in progress: the new
+  trigger is rejected, identifying the run already underway, rather than
+  starting a second run that could race the first over the same repos.
 
 ## Requirements *(mandatory)*
 
@@ -112,7 +123,9 @@ inspect the repo directly on GitHub to understand why.
   evidence — an assessment is not considered valid without it.
 - **FR-006**: System MUST regenerate a repo's assessment only when its
   meaningful inputs (README content, recent commit history, issue/PR titles
-  and states) have actually changed since that repo's last assessment.
+  and states) have actually changed since that repo's last assessment — any
+  new commit, issue, or pull request event since that assessment counts as
+  a change, with no accumulation threshold or minimum batch size.
 - **FR-007**: System MUST retain every assessment ever generated for a repo
   as its own record, never overwriting a prior one; "the current assessment"
   for a repo is always its most recent record.
@@ -123,6 +136,13 @@ inspect the repo directly on GitHub to understand why.
 - **FR-009**: System MUST work identically against public and private repos
   in the connected account, private repos via credentials supplied by the
   account owner.
+- **FR-010**: System MUST execute a population run asynchronously — triggering
+  it does not block the caller, and per-repo results become visible
+  incrementally as the run processes them, tracked via the run record's
+  in-progress state.
+- **FR-011**: System MUST reject a new population run trigger while one is
+  already in progress, identifying the in-progress run rather than starting
+  a second, overlapping one.
 
 ### Key Entities
 
@@ -137,8 +157,8 @@ inspect the repo directly on GitHub to understand why.
   current assessment" is the latest record, derived, never a field that gets
   edited in place.
 - **Run record**: one record per population run — when it started and
-  finished, its outcome, and a summary of what it reached, updated, or
-  failed on.
+  (once finished) finished, its current outcome (including while still
+  in progress), and a summary of what it reached, updated, or failed on.
 
 ## Success Criteria *(mandatory)*
 
