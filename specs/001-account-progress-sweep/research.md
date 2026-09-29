@@ -30,6 +30,17 @@ Cron), with no new hosted dependency.
   revisit only if the chunked-cron approach proves insufficient at higher
   scale (out of the ~100-repo NFR-002 target).
 
+**Cron cadence**: `vercel.json` schedules the tick once daily
+(`0 0 * * *`), not the finer interval this design would ideally use —
+Vercel's Hobby plan only permits daily-or-coarser cron schedules; anything
+more frequent needs a paid plan. This means an in-progress run only
+auto-advances via cron once a day; `POST /api/runs` and a direct call to
+the advance route still process synchronously within that one request, so
+triggering (or re-triggering) a run manually isn't affected — only the
+"nothing calls it and it just sits" case waits up to a day. Revisit this
+cadence if that latency becomes a real problem, or once a paid plan makes
+a shorter interval available.
+
 ## Enforcing "only one run at a time" (FR-011)
 
 **Decision**: A partial unique index on `runs (status) WHERE status =
