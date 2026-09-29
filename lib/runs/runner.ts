@@ -19,12 +19,17 @@ export class RunAlreadyInProgressError extends Error {
 }
 
 function isUniqueViolation(err: unknown): boolean {
-  return (
-    typeof err === "object" &&
-    err !== null &&
-    "code" in err &&
-    (err as { code?: unknown }).code === "23505"
-  );
+  // The neon-http driver wraps the underlying Postgres error (which carries
+  // `code`) in an outer "Failed query" error via `.cause`, rather than
+  // exposing `code` on the thrown error itself — walk the cause chain.
+  let current: unknown = err;
+  while (typeof current === "object" && current !== null) {
+    if ("code" in current && (current as { code?: unknown }).code === "23505") {
+      return true;
+    }
+    current = (current as { cause?: unknown }).cause;
+  }
+  return false;
 }
 
 /**

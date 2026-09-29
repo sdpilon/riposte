@@ -19,7 +19,10 @@ function chainable<T>(getValue: () => T) {
   const handler: ProxyHandler<object> = {
     get(_target, prop) {
       if (prop === "then") {
-        return (resolve: (value: T) => void, reject: (err: unknown) => void) => {
+        return (
+          resolve: (value: T) => void,
+          reject: (err: unknown) => void,
+        ) => {
           try {
             resolve(getValue());
           } catch (err) {
@@ -50,10 +53,13 @@ describe("createRun", () => {
   });
 
   it("maps a wrapped 23505 unique-violation (real neon-http error shape) to RunAlreadyInProgressError", async () => {
-    const pgError = Object.assign(new Error("duplicate key value violates unique constraint"), {
-      code: "23505",
-      constraint: "runs_single_in_progress",
-    });
+    const pgError = Object.assign(
+      new Error("duplicate key value violates unique constraint"),
+      {
+        code: "23505",
+        constraint: "runs_single_in_progress",
+      },
+    );
     const wrapped = new Error(
       'Failed query: insert into "runs" (...) values (...) returning "id"',
       { cause: pgError },
@@ -65,9 +71,8 @@ describe("createRun", () => {
     );
     selectMock.mockReturnValue(chainable(() => [{ id: "existing-run-id" }]));
 
-    const { createRun, RunAlreadyInProgressError } = await import(
-      "@/lib/runs/runner"
-    );
+    const { createRun, RunAlreadyInProgressError } =
+      await import("@/lib/runs/runner");
 
     await expect(createRun()).rejects.toMatchObject(
       new RunAlreadyInProgressError("existing-run-id"),
