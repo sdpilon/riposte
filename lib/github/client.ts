@@ -133,18 +133,25 @@ export class GitHubClient {
       }));
   }
 
+  /** A repo with the Pull Requests feature disabled 404s this endpoint —
+   * that's "no PR activity", not a failure, so it returns []. */
   async listPullRequests(owner: string, repo: string): Promise<ActivityItem[]> {
-    const prs = await this.octokit.paginate(this.octokit.rest.pulls.list, {
-      owner,
-      repo,
-      state: "all",
-      per_page: 100,
-    });
-    return prs.map((pr) => ({
-      externalId: String(pr.number),
-      occurredAt: pr.updated_at,
-      summary: pr.title,
-    }));
+    try {
+      const prs = await this.octokit.paginate(this.octokit.rest.pulls.list, {
+        owner,
+        repo,
+        state: "all",
+        per_page: 100,
+      });
+      return prs.map((pr) => ({
+        externalId: String(pr.number),
+        occurredAt: pr.updated_at,
+        summary: pr.title,
+      }));
+    } catch (err) {
+      if (isNotFound(err)) return [];
+      throw err;
+    }
   }
 }
 
