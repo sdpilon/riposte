@@ -2,17 +2,12 @@
 
 ## When a pull request is required
 
-**Once real application code exists, every commit goes through a pull request — no
-exceptions by file type.** A one-line doc fix goes through a PR exactly like
-application code does. Until then (the current docs-only phase), commits go straight
-to `main` — see `CLAUDE.md` for the live status of that interim exception and what
-ends it.
+**Every commit goes through a pull request — no exceptions by file type.** A one-line
+doc fix goes through a PR exactly like application code does.
 
 Rationale: Constitution Development Practices already commits to "a branch-protected
 trunk with CI-required pull requests from day one, ... even for the person building it
-alone." Carving out a docs-only exception once code exists would just be a second,
-unenforced convention sitting next to the enforced one — real branch protection is
-binary at the repo level, so the policy should be too.
+alone." Real branch protection is binary at the repo level, so the policy is too.
 
 ## Opening a PR is its own authorization
 

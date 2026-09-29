@@ -33,7 +33,26 @@ some of these same lessons also carry.
   file the migration tool needs) may not be part of that build output at
   all — they need an explicit, separate `COPY` into the final stage.
 
-## Nitro / Vercel (server framework + hosting)
+## Next.js / Vercel (server framework + hosting)
+
+*Renamed from "Nitro / Vercel" once riposte's actual stack was decided
+(2026-09-27, see `specs/001-account-progress-sweep/research.md`) —
+Nitro/SolidStart were never adopted; the bullets below that were
+already generic still apply, the framework-specific ones below are new.*
+
+- **Next.js 16 App Router's generated `LayoutProps<"/">` type only exists
+  after `.next/types` has been produced by a prior `next dev`/`next build`.**
+  A root `layout.tsx` typed as `{ children }: LayoutProps<"/">` passes
+  typecheck once you've built locally, then fails cold in CI (or any fresh
+  `tsc --noEmit`) with "Cannot find name 'LayoutProps'" — a hidden
+  build-order dependency. Use a plain inline props type
+  (`{ children: React.ReactNode }`) instead; it's equally correct and has
+  no such dependency.
+- **A page/route whose content depends on live, frequently-changing DB
+  state needs `export const dynamic = "force-dynamic"`** — otherwise
+  Next.js may try to statically prerender it at build time, which either
+  bakes in stale data or fails outright if the build environment has no
+  DB credentials.
 
 - **Don't hardcode a hosting-platform preset if the build tool
   auto-detects it.** A server framework's build tool may already detect
@@ -69,6 +88,16 @@ some of these same lessons also carry.
   whatever manifest/journal file tracks which have run) at runtime, and
   a build step that only bundles `import`ed files won't include them
   automatically.
+- **A partial unique index (a `WHERE` clause) is supported** via
+  `uniqueIndex("name").on(table.col).where(sql\`...\`)` inside a table's
+  third-argument callback — confirmed generating correct SQL
+  (`CREATE UNIQUE INDEX ... WHERE ...`) with drizzle-kit 0.31.x. Useful
+  for "at most one row in state X" constraints enforced at the database
+  level rather than an app-level check-then-insert.
+- **`drizzle-kit generate` doesn't need a live database connection** —
+  only `migrate`/`push` do. Safe to run with an empty or placeholder
+  `DATABASE_URL` when you just need the SQL migration file generated
+  from the current schema.
 
 ## Postgres (or any DB used behind an append-only assessment/history table)
 
@@ -81,6 +110,14 @@ some of these same lessons also carry.
   on-write branching for preview environments, for instance) is a clean
   way to isolate preview/demo data per deployment without every preview
   sharing one production database.
+- **Concretely, Neon's Vercel-native integration** (`vercel integration
+  add neon`) is this pattern — free-tier compatible (10 branches/project,
+  100 CU-hours/month as of 2026), unlike Supabase's equivalent Branching
+  feature, which is gated behind its Pro plan. Whether branch-per-preview
+  is actually active by default through this CLI path, versus still
+  needing one dashboard toggle, wasn't confirmed from docs alone as of
+  this writing — verify empirically against the real provisioned
+  resource once deployed, don't assume full dashboard parity.
 - A managed provider's free-tier network-transfer cap can be blown
   through by an unbounded query pattern well before the data volume
   itself seems large — a useful early warning sign that a "get current
@@ -93,6 +130,12 @@ some of these same lessons also carry.
 
 ## pnpm
 
+- **A new dependency that needs to run a postinstall/build script
+  (`esbuild`, native bindings, etc.) fails outright with
+  `ERR_PNPM_IGNORED_BUILDS`** unless that package is explicitly approved
+  — set `onlyBuiltDependencies: [...]` in `pnpm-workspace.yaml` (or run
+  `pnpm approve-builds` interactively) rather than treating the failure
+  as a broken package or a real install problem.
 - **`storeDir` must be set in the workspace config file, not `.npmrc`.**
   A project-level `.npmrc` setting for the package store's location can
   be silently ignored entirely — the actual compatibility check that
@@ -220,6 +263,16 @@ project reuses it, not repeated here.)
   triggering the eager import at all. This generalizes to any framework
   with a similar server/client code-splitting pattern, not just one
   specific router library.
+- **Confirmed again in riposte, and fixed at the source instead of
+  mocking every test:** a Drizzle client built by calling an env-var-
+  reading function at module load time (`const db = drizzle(neon(getDatabaseUrl()))`
+  at the top of the file) broke any test that transitively imported it —
+  even a pure-function unit test that never touched the database. Fix:
+  wrap the real client construction in a lazy `Proxy` whose `get` trap
+  only builds the client (and only then requires the env var) on first
+  actual property access. Importing the module for its types/other
+  exports stays side-effect-free; only a real query triggers the env
+  check.
 - A framework's router-scoped data primitives (anything that needs to
   read from "the current route") typically need the test to actually
   render the component inside that framework's real router/route
@@ -233,3 +286,15 @@ project reuses it, not repeated here.)
   team/account level for local CLI use (`pull`, `build`, even a basic
   list command), independent of whether the platform's own web UI or
   REST API supports project-scoped tokens for other purposes.
+- **`vercel integration add <slug>` (alias `vercel install`/`vc i`)
+  provisions a marketplace resource and connects it to the linked
+  project in one command** — genuinely non-interactive-capable via
+  `--plan`, `--metadata`, `--environment`, `--format json`, etc.
+  (confirmed against current, 2026-09, Vercel CLI docs). This is the
+  actual mechanism for what used to require dashboard clicking, e.g.
+  `vercel integration add neon` for a Postgres database — see the Neon
+  entry above for the one thing this CLI path didn't confirm.
+- `vercel git connect` connects the current directory's linked project
+  to its local `.git` remote for automatic Production/Preview
+  Deployments — the other half of "no dashboard needed" alongside
+  `vercel integration add`.
