@@ -30,16 +30,22 @@ For each policy file, check three directions:
    rule rather than just prose), does the derived section still match?
 2. **Dangling references.** Does `CONTRIBUTING.md`/`CLAUDE.md` reference something
    the policy file no longer says — a removed exception, a deleted section, a
-   condition that used to apply and doesn't anymore? `CLAUDE.md`'s "Current phase"
-   section is the clearest example in this repo: it names exactly what else needs
-   editing when it's deleted (a parenthetical in `CLAUDE.md`'s own `## GitHub`
-   heading, a sentence in `.policy/github.md`, a parenthetical in
-   `CONTRIBUTING.md`). If you're running this skill because that phase just ended,
-   follow its own listed steps directly rather than treating it as generic
-   drift-checking.
+   condition that used to apply and doesn't anymore? A past example in this repo:
+   `CLAUDE.md` once had a "Current phase" bootstrap exception (permitting direct
+   pushes to `main` before real PRs started) that named exactly what else needed
+   editing once it ended — a parenthetical in `CLAUDE.md`'s own `## GitHub` heading,
+   a sentence in `.policy/github.md`, a parenthetical in `CONTRIBUTING.md`. When a
+   policy names a specific resolvable condition like that, treat its own listed
+   follow-up steps as authoritative once that condition resolves, rather than
+   guessing at what else needs to change.
 3. **Missing coverage.** Is there a `.policy/<topic>.md` file with no
    corresponding section in `CONTRIBUTING.md` or `CLAUDE.md` at all — meaning it was
    added without going through the full three-layer process (see `policy-add`)?
+4. **ID drift.** Does an obligation ID (`<PREFIX>-N`) cited elsewhere —
+   `CONTRIBUTING.md`, `CLAUDE.md`, another policy file, a GitHub issue title — still
+   match what that ID currently says in its own `.policy/<topic>.md`? IDs are never
+   renumbered, so a mismatch here means the obligation's content changed without
+   updating something that cited it, not that the ID itself moved.
 
 Also check the reverse direction once: is there a rule stated in `CONTRIBUTING.md` or
 `CLAUDE.md` that has no backing policy file — something that was added directly to an
@@ -79,8 +85,7 @@ to see exactly what's about to change before it does.
 
 Once approved, apply the edits and commit per `.policy/git.md` (one logical
 change — a sync pass across several files for one underlying cause is still one
-commit) and `.policy/github.md` (check `CLAUDE.md`'s "Current phase" section for
-whether a PR is currently required).
+commit) and `.policy/github.md` (every commit goes through a pull request).
 
 If you find zero mismatches, say so plainly — a clean sync check is a useful result,
 not a non-event.

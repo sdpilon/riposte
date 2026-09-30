@@ -42,12 +42,18 @@ history: it started as a draft policy and was correctly demoted to memory).
 
 ## Writing the three layers
 
-1. **`.policy/<topic>.md`** — state the rule as a bolded claim, then the
-   rationale. If the topic has more than one distinct rule (like `git.md` covering
-   commits, worktrees, new files, and auth as separate `##` sections), split it into
-   sections the same way. Don't pad it with implementation detail that belongs in
-   `CLAUDE.md` instead — mechanism (exact commands, exact tool calls) lives in the
-   agent layer, not here.
+1. **`.policy/<topic>.md`** — copy `templates/policy-template.md` and fill in the
+   obligation IDs; don't freehand the structure. Each obligation gets its own
+   `<PREFIX>-N` (one sentence, exactly one MUST/SHOULD/MUST NOT/MAY), followed by a
+   shared "Rationale:" for the section it belongs to. Check existing `.policy/*.md`
+   files for prefixes already taken before picking a new one — a prefix is assigned
+   once and never reused, even if an obligation is later removed or the file is
+   restructured, so anything that ever cited it by ID doesn't silently start pointing
+   at something else. If the topic has more than one distinct rule area (like `git.md`
+   covering commits, worktrees, new files, and auth), split it into sections the same
+   way, each with its own obligations. Don't pad it with implementation detail that
+   belongs in `CLAUDE.md` instead — mechanism (exact commands, exact tool calls) lives
+   in the agent layer, not here.
 
 2. **`CONTRIBUTING.md`** — add or extend a section under the relevant heading, written
    as instructions a human would actually follow, ending with a link back to the new
@@ -78,5 +84,5 @@ history: it started as a draft policy and was correctly demoted to memory).
   is not "new top-level," so use judgment: a brand-new `.policy/<topic>.md` file
   is exactly the kind of thing that rule is about.
 - Commit following `.policy/git.md` (one logical change — the whole
-  three-layer addition is one change, not three) and `.policy/github.md` (check
-  `CLAUDE.md`'s "Current phase" section for whether a PR is currently required).
+  three-layer addition is one change, not three) and `.policy/github.md` (every
+  commit goes through a pull request).
