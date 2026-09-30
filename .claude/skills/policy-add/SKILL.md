@@ -17,10 +17,11 @@ three kept in sync from the start:
    something an agent can act on directly, also referencing the policy file.
 
 Read the existing files in `.policy/` before writing a new one — they're the
-style guide. Notice the pattern: a bolded one- or two-sentence statement of the rule,
-then a short "Rationale:" paragraph explaining what actually breaks without it (not
-just "because I said so"). Match that tone; don't invent a new format for the new
-topic.
+style guide. Notice the pattern: obligations as `<PREFIX>-N: <subject> MUST/SHOULD/
+MUST NOT/MAY <requirement>`, one sentence each, grouped into `##` sections, each
+section followed by a short "Rationale:" paragraph explaining what actually breaks
+without it (not just "because I said so"). Match that tone; don't invent a new format
+for the new topic.
 
 ## Before writing anything
 

@@ -1,6 +1,6 @@
 ---
 name: policy-audit
-description: Use when running as an automated CI check (on push to main) to verify self-checkable obligations from .policy/compliance-audit.md against live repo state, and file GitHub issues for any found unmet. Not for interactive/conversational use.
+description: Checks self-verifiable obligations in .policy/compliance-audit.md against live repo state and files a GitHub issue for each one currently unmet. Use this as an automated CI step on push to main, not interactively or conversationally — there is no live user to ask questions of mid-run.
 ---
 
 # Auditing self-checkable policy obligations
