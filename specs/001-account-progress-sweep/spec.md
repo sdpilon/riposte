@@ -159,6 +159,9 @@ inspect the repo directly on GitHub to understand why.
 - **Run record**: one record per population run — when it started and
   (once finished) finished, its current outcome (including while still
   in progress), and a summary of what it reached, updated, or failed on.
+- **Run item**: one entry per repo being processed within a given run —
+  what makes a run's progress independently visible per repo (FR-010) and
+  lets the run resume where it left off rather than starting over.
 
 ## Success Criteria *(mandatory)*
 

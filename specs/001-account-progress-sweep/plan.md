@@ -23,8 +23,8 @@ functions can't hold a request open for the duration of a ~100-repo sweep.
 
 ## Technical Context
 
-**Language/Version**: TypeScript 5.x, Node.js 22 LTS (Vercel's current
-supported runtime)
+**Language/Version**: TypeScript 5.x, Node.js 24 LTS (Vercel's current
+default runtime)
 
 **Primary Dependencies**: Next.js (App Router) + React, Tailwind CSS, Radix
 UI primitives, Lucide icons, Drizzle ORM, Vercel AI SDK, Octokit
