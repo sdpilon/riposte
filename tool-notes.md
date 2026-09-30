@@ -113,6 +113,20 @@ some of these same lessons also carry.
   needing one dashboard toggle, wasn't confirmed from docs alone as of
   this writing — verify empirically against the real provisioned
   resource once deployed, don't assume full dashboard parity.
+- **That Vercel-managed Neon integration can't repoint an existing
+  Vercel project's DB connection to a different/external Neon project**
+  — the connection is owned and managed by Vercel, not swappable to a
+  Neon project created independently in the Neon console. Moving to a
+  Neon-owned setup instead means creating the new Neon project first,
+  migrating data into it (`pg_dump --no-owner --no-privileges
+  --format=custom` from the old DB's direct connection string, then
+  `pg_restore --no-owner --no-privileges --clean --if-exists` into the
+  new one — `--no-owner --no-privileges` matters because Neon
+  auto-generates a project-specific role, e.g. `neondb_owner`, so the
+  source dump's ownership/GRANT statements would otherwise reference a
+  role that doesn't exist in the new project), then connecting the new
+  Neon project to Vercel via Neon's own "Connect to Vercel" integration
+  rather than `vercel integration add neon`.
 - A managed provider's free-tier network-transfer cap can be blown
   through by an unbounded query pattern well before the data volume
   itself seems large — a useful early warning sign that a "get current
