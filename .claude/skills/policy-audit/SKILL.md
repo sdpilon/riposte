@@ -18,39 +18,28 @@ section. Never CA-7's exclusion (`branch-protection.md`'s BP-*) or anything else
 needing credentials beyond what this CI job already has — treating a permission
 error as "passing" would be worse than not checking it.
 
-## Procedure
+## Implementation
 
-1. Read `.policy/compliance-audit.md`. For each CA-N, run its check:
+The checks are implemented as a plain script — `.github/scripts/policy-audit.sh` —
+invoked by the `compliance-audit` job in `.github/workflows/ci.yml` on push to
+`main`. This skill documents the contract; the script is the actual, authoritative
+implementation. There is no separate agent-run procedure to keep in sync with it.
 
-   | ID | Check |
-   |----|-------|
-   | CA-1 | release/versioning automation config present |
-   | CA-2 | Dockerfile/docker-compose.yml or equivalent, plus self-host docs, present |
-   | CA-3 | sanitization/prompt-injection handling present near the README-fetch path |
-   | CA-4 | a credential-free demo/fake-data path exists |
-   | CA-5 | no hardcoded personal-identity strings in `lib/`, `app/`, `components/` |
-   | CA-6 | `CLAUDE.local.md` / `.claude/settings.local.json` exist and are untracked |
+If `.policy/compliance-audit.md`'s obligations change (an ID added, removed, or
+reworded), update `.github/scripts/policy-audit.sh` in the same change — treat any
+mismatch between the script and the policy file as a bug in the script, fix it there.
 
-   If `.policy/compliance-audit.md`'s obligation list changes, update this table in
-   the same change — it exists so the check logic and the policy don't drift apart;
-   treat any mismatch between this table and the policy file as a bug in this file,
-   fix it here.
-
-2. For each failing obligation: check for an open issue labeled `process-hygiene`
-   whose title contains that ID (`gh issue list --label process-hygiene --state open
-   --search "<ID>"`). If found, skip. Otherwise file one: `gh issue create --label
-   process-hygiene --title "<ID>: <short description>" --body "<what's missing, and
-   a link to the obligation in .policy/compliance-audit.md>"`.
-
-3. For each passing obligation: do nothing. Never auto-close a matching open issue —
-   closing means a human confirmed the fix is actually sufficient, not just that the
-   existence-check flipped to pass (see `compliance-audit.md`'s "what this does not
-   do" boundary).
-
-4. Exit 0 regardless of findings — this must never fail the build (see
-   `.policy/compliance-audit.md`, "How it runs"). Log one line per obligation either
-   way (pass, filed #N, or already tracked as #N) so the CI log is a readable audit
-   trail even when nothing needs action.
+The script's behavior, for reference:
+- Runs each CA-N's check (file/pattern existence only, never sufficiency).
+- For each failing obligation: checks for an open issue labeled `process-hygiene`
+  whose title contains that ID before filing a new one, so reruns don't duplicate.
+- For each passing obligation: does nothing. Never auto-closes a matching open
+  issue — closing means a human confirmed the fix is actually sufficient, not just
+  that the existence-check flipped to pass (see `compliance-audit.md`'s "what this
+  does not do" boundary).
+- Always exits 0, regardless of findings — this must never fail the build (see
+  `.policy/compliance-audit.md`, "How it runs"). Logs one line per obligation either
+  way (pass, filed, or already tracked) so the CI log is a readable audit trail.
 
 ## What this is not
 Not a substitute for building the missing thing. Not a sufficiency check. Not

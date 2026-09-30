@@ -18,7 +18,7 @@ beyond what CI already has:
 **CA-1**: The repository MUST contain release/versioning automation tooling.
 
 **CA-2**: The repository MUST contain self-host packaging (a container/compose
-definition or equivalent) and self-host documentation.
+definition or equivalent).
 
 **CA-3**: The code path that fetches and forwards untrusted external content (e.g. a
 repository README) MUST have sanitization or prompt-injection handling near it.
@@ -35,13 +35,15 @@ MUST exist where expected and MUST remain untracked by git.
 credentials beyond what CI already holds — see
 [`branch-protection.md`](branch-protection.md) for the obligation this excludes.
 
+**CA-8**: The repository MUST contain self-host documentation.
+
 ## How it runs
 
 A non-blocking step in the CI workflow, triggered on push to `main` only. Not
-scheduled on a timer: none of CA-1 through CA-6 can become newly false without
-something first being committed to the trunk, so a time-based recheck would only ever
-re-confirm an answer that hasn't changed. It never fails the build — these are
-hygiene findings, not per-PR correctness, and shouldn't block a merge the way
+scheduled on a timer: none of CA-1 through CA-6 or CA-8 can become newly false
+without something first being committed to the trunk, so a time-based recheck would
+only ever re-confirm an answer that hasn't changed. It never fails the build — these
+are hygiene findings, not per-PR correctness, and shouldn't block a merge the way
 type-checking or tests do.
 
 ## What happens to a finding
@@ -56,7 +58,7 @@ that would start drifting immediately.
 
 ## What this does not do
 
-This checks existence and pattern, never sufficiency. It can report that CA-2 is
+This checks existence and pattern, never sufficiency. It can report that CA-8 is
 unmet because no self-host documentation exists; it cannot judge whether
 documentation that does exist is actually good enough. Turning a finding into a real
 fix is ordinary development work, done through this repo's normal process — this
