@@ -35,11 +35,6 @@ some of these same lessons also carry.
 
 ## Next.js / Vercel (server framework + hosting)
 
-*Renamed from "Nitro / Vercel" once riposte's actual stack was decided
-(2026-09-27, see `specs/001-account-progress-sweep/research.md`) —
-Nitro/SolidStart were never adopted; the bullets below that were
-already generic still apply, the framework-specific ones below are new.*
-
 - **Next.js 16 App Router's generated `LayoutProps<"/">` type only exists
   after `.next/types` has been produced by a prior `next dev`/`next build`.**
   A root `layout.tsx` typed as `{ children }: LayoutProps<"/">` passes
