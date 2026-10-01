@@ -22,13 +22,6 @@ in place, a single reasonably-scoped credential is fine — the extra
 approval ceremony around every individual call was solving a problem
 that a scoping decision, made once, already solved.
 
-**Personal secret-injection tooling belongs in the maintainer's own
-shell configuration, never inside a repo's own scripts.** A project
-meant to be self-hosted has to work for someone who has never heard of
-your personal credential-wrapping setup. If a `package.json` script (or
-equivalent) only works when wrapped in a personal alias, that's a
-self-hosting bug, not a convenience.
-
 **When automation opens pull requests, the merge-review gate needs an
 identity distinct from the maintainer's own account.** Most git hosts
 block a PR author from approving their own PR — but that block is keyed
@@ -51,23 +44,6 @@ live result and confirms it renders, "CI is green" only means "it
 compiled," not "it works." A real smoke test — hit the live deployed
 URL, confirm it returns real content and not an error page — belongs in
 the required-checks gate, not as an optional nice-to-have.
-
-**Automation should never merge, regardless of how trivial the change
-looks or how green CI is.** That authority is a human's, always. Where
-the platform allows it, make this a _technical_ gate (required review
-from an account distinct from whatever opens the PR), not just a written
-instruction an agent is trusted to follow — written policy is real, but
-a technical gate doesn't depend on anyone remembering to follow it.
-
-**A manual release-batching branch that produces no changelog or version
-history is strictly worse than release automation doing the same job
-directly on the trunk.** A staging-style branch that exists purely to
-batch several changes before a manual promotion step is a real, easy to
-forget, ceremony — and produces nothing (no version bump, no changelog)
-that a proper release-automation tool watching the trunk directly
-wouldn't produce with zero manual steps. If the only reason for a second
-long-lived branch is batching, an automated release process on the
-trunk itself replaces it entirely, not just partially.
 
 **Mark work complete only once it's actually landed, not once a PR
 exists for it.** Work living only on an unmerged branch isn't done yet,
@@ -97,14 +73,6 @@ deploy is self-consistent, rather than documenting "remember to reseed
 after changing the fixtures."
 
 ## Self-hosting and open-source hygiene
-
-**Audit for hardcoded personal-identity strings, not just secrets.** A
-username, an account handle, an email baked directly into UI text or a
-default value is a real leak for anything meant to be self-hosted or
-shown as a public demo with someone else's (or fake) data — it silently
-deanonymizes the original author even when nothing else about the
-instance is theirs. A pass that only looks for hardcoded _secrets_ will
-miss this category entirely; it needs its own check.
 
 **A fixture that's meant to prove a resolution/linking feature works
 needs a real, live target to resolve against.** A plausible-looking fake

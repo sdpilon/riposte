@@ -4,9 +4,9 @@
 GitHub repository ruleset exported as JSON), not as configuration that exists only
 inside GitHub's UI.
 
-Rationale: `engineering-practices.md`'s "CI, deploys, and verification" section and
-`github.md`'s "Who merges" section both hold that where the platform supports a real
-technical gate, it should exist — not just be trusted to be followed.
+Rationale: `github.md`'s "Who merges" section (GH-6/GH-7) holds that where the
+platform supports a real technical gate, it should exist — not just be trusted to
+be followed.
 
 ## Why this isn't part of the compliance audit
 

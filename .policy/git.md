@@ -93,6 +93,4 @@ constraint on the repo's own self-sufficiency, not a restriction on what tooling
 agent or operator may use to manage a live session's credentials. Misreading this as
 "never use any personal credential tooling, even the operator's own, for anything"
 would block the operator's own ambient auth-switching scripts from ever fixing a
-broken session — the opposite of what this rule is for. See
-`engineering-practices.md`'s "Credential and access scoping" section for the
-incident this generalizes from.
+broken session — the opposite of what this rule is for.
