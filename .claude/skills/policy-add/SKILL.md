@@ -1,20 +1,33 @@
 ---
 name: policy-add
-description: Add a new process/procedure policy to this repo — creates .policy/<topic>.md (the invariant rule + rationale) and writes matching sections into CONTRIBUTING.md (human-facing) and CLAUDE.md (agent-facing), so all three layers stay consistent from the moment a policy exists. Use this whenever the user wants to add, define, write down, or formalize a new project policy, procedure, convention, or house rule for this repo — including phrasing like "we should have a rule about...", "let's decide how we handle...", "add a procedure for...", or "what's our policy on..." — even when they don't say the word "policy" explicitly. If it's unclear whether the proposed rule belongs in the repo at all versus being personal preference, use policy-judge first, then come back here once it's confirmed as policy.
+description: Add or modify a process/procedure policy in .policy/<topic>.md (the invariant rule + rationale) — step 1 of a two-step process. It deliberately does NOT touch CONTRIBUTING.md or CLAUDE.md; it ends by flagging that those are now out of sync and recommending policy-sync (step 2) to propagate the change. Use this whenever the user wants to add, define, write down, or formalize a new project policy, procedure, convention, or house rule for this repo — including phrasing like "we should have a rule about...", "let's decide how we handle...", "add a procedure for...", or "what's our policy on..." — even when they don't say the word "policy" explicitly. Also use it for editing an existing obligation's wording when a prior assumption turned out stale. If it's unclear whether the proposed rule belongs in the repo at all versus being personal preference, use policy-judge first, then come back here once it's confirmed as policy.
 ---
 
 # Adding a policy
 
 This repo splits process rules into three layers, and every policy topic needs all
-three kept in sync from the start:
+three kept in sync eventually — but as two separate, deliberately sequenced steps,
+not one bundled action:
 
 1. **`.policy/<topic>.md`** — the invariant rule and *why* it exists, written at
    a level that makes sense regardless of who or what is carrying it out. Same altitude
    as a constitution principle + rationale, but for process rather than product.
+   **This skill writes this layer only.**
 2. **`CONTRIBUTING.md`** — the human-readable narrative version, referencing the
    policy file for full rationale rather than restating it.
 3. **`CLAUDE.md`** — the agent-operational version: the same rule, phrased as
    something an agent can act on directly, also referencing the policy file.
+
+Layers 2 and 3 are **`policy-sync`'s job, run as a separate, later step** — never
+inline here, even when the edit looks small enough to "just also" fix while you're in
+the file. Committing a policy change and committing its propagation into the
+human/agent docs are different units of review: the first is "what's the rule now,"
+the second is "does everything that describes the rule agree with it," and bundling
+them hides which one a reviewer is actually looking at. This split also keeps each
+commit matching `.policy/git.md`'s GIT-1 (one logical change) without relying on
+"a three-file change can still count as one change if it's about the same topic" as
+the excuse — a different file touched for a genuinely different reason (propagating
+vs. deciding) is a different change.
 
 Read the existing files in `.policy/` before writing a new one — they're the
 style guide. Notice the pattern: obligations as `<PREFIX>-N: <subject> MUST/SHOULD/
@@ -41,7 +54,7 @@ and writing it into the repo anyway would be re-litigating a decision this proje
 already made once (see the "confirm before committing" case in this project's
 history: it started as a draft policy and was correctly demoted to memory).
 
-## Writing the three layers
+## Writing the policy layer
 
 1. **`.policy/<topic>.md`** — copy `templates/policy-template.md` and fill in the
    obligation IDs; don't freehand the structure. Each obligation gets its own
@@ -54,24 +67,22 @@ history: it started as a draft policy and was correctly demoted to memory).
    covering commits, worktrees, new files, and auth), split it into sections the same
    way, each with its own obligations. Don't pad it with implementation detail that
    belongs in `CLAUDE.md` instead — mechanism (exact commands, exact tool calls) lives
-   in the agent layer, not here.
+   in the agent layer, written there later by `policy-sync`, not here.
 
-2. **`CONTRIBUTING.md`** — add or extend a section under the relevant heading, written
-   as instructions a human would actually follow, ending with a link back to the new
-   policy file ("Full rationale: `.policy/<topic>.md`"). Don't duplicate the
-   rationale paragraph here — the whole point of the split is one source of truth for
-   *why*.
+   Editing an existing obligation's wording (not just adding a new one) belongs here
+   too — e.g. a rationale that assumed a credential/permission state which has since
+   changed. Update the text under its existing ID; IDs are never renumbered or reused,
+   but the sentence they label can be corrected as understanding evolves.
 
-3. **`CLAUDE.md`** — same idea, phrased as agent-operational bullets. If the policy
-   has a mechanism-specific detail that's genuinely agent-only (an exact tool
-   invocation, a specific automation behavior), that's the right place for it, not
-   the policy file.
-
-4. **Check `constitution.md`.** If the rule is durable and non-negotiable enough that
+2. **Check `constitution.md`.** If the rule is durable and non-negotiable enough that
    violating it would be a real regression — not just a process nicety — flag that it
    might belong as a constitution principle instead of (or in addition to) a regular
    policy, and ask before proceeding either way. This should be rare; most new
    policies are regular process rules, not constitutional principles.
+
+Do not touch `CONTRIBUTING.md` or `CLAUDE.md` in this pass, even to fix an obviously
+related, obviously small mention — that propagation is `policy-sync`'s job (see
+"Finishing up").
 
 ## Finishing up
 
@@ -84,6 +95,14 @@ history: it started as a draft policy and was correctly demoted to memory).
   new top-level/structural file. Extending an existing policy file with a new section
   is not "new top-level," so use judgment: a brand-new `.policy/<topic>.md` file
   is exactly the kind of thing that rule is about.
-- Commit following `.policy/git.md` (one logical change — the whole
-  three-layer addition is one change, not three) and `.policy/github.md` (every
-  commit goes through a pull request).
+- Commit — just the `.policy/<topic>.md` change, nothing else — following
+  `.policy/git.md` and `.policy/github.md` (every commit goes through a pull
+  request). Per `.policy/github.md`, pushing a branch and opening its PR are separate
+  authorizations — confirm before opening the PR, don't treat permission to commit as
+  permission to also open it.
+- **Conclude by stating plainly that this change is now unsynced**: name the policy
+  file just changed and say that `CONTRIBUTING.md`/`CLAUDE.md` may no longer agree
+  with it, and recommend running `policy-sync` next. Don't run `policy-sync`
+  yourself as part of this skill, and don't silently leave the recommendation
+  implied — say it as an explicit next step the user can act on (or decline) on their
+  own schedule.

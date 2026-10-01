@@ -25,6 +25,45 @@ Rationale: the expected end state after any completed piece of work is a clean
 `main` — up to date with `origin/main`, nothing to commit, no stray branches or
 worktrees.
 
+## Branching model
+
+**GIT-7**: This repository MUST follow Trunk-Based Development: a single long-lived
+branch (`main`), with every other branch short-lived and merged back via PR
+(GIT-3/GIT-4), never a parallel long-lived branch (a `develop` branch, a release
+branch, or similar).
+
+```mermaid
+flowchart LR
+    A["Feature branch<br/>(worktree, short-lived)"] -->|"PR: review + CI required<br/>(GIT-3/GIT-4, BP-1)"| B(("main<br/>(single trunk)"))
+    B -->|"every merge"| C["Vercel: continuous<br/>production deploy"]
+    B -->|"qualifying merge<br/>(feat / fix)"| D["Semver tag +<br/>GitHub Release"]
+    D -.->|"pin point,<br/>not a gate"| E["Self-hosters<br/>(incl. the maintainer's<br/>own self-hosted runs)"]
+```
+
+Rationale: a single trunk keeps integration continuous and avoids the divergence,
+merge overhead, and "which branch is actually current" ambiguity of parallel
+long-lived branches — overhead this project has no multi-track release train to
+justify.
+
+## Releases
+
+**GIT-8**: Semantic-version release tags MUST be cut automatically from qualifying
+merges to `main` — no manual release step, and no separate release branch or release
+PR to batch them.
+
+**GIT-9**: Release tags MUST NOT gate or delay deployment to the maintainer's own
+production instance, which deploys continuously from `main` HEAD independently of
+tagging.
+
+Rationale: the PR-review-plus-CI gate every merge to `main` already passes through
+(GIT-1–GIT-4, BP-1) *is* the deliberate checkpoint — re-gating on top of it via a
+batched release step would duplicate a decision already made at merge time. Release
+tags exist for a different consumer: self-hosters (including the maintainer's own
+instance, if ever run outside Vercel) who have no equivalent of "the maintainer just
+reviewed this," and so need a stable, known-good version to pin to instead of
+tracking `main` HEAD. See `compliance-audit.md`'s CA-1 for the obligation that this
+tooling exists at all.
+
 ## Adding new files
 
 **GIT-5**: A new top-level or structural file (a new top-level doc, a new config
