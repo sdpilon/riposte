@@ -25,6 +25,22 @@ for the same rules in agent-operational form — this document is the narrative 
   obviously part of already-approved work doesn't need a separate ask.
 - Use your own ambient git/GitHub credentials (SSH key, `gh auth login`). Nothing in
   this repo should ever need a personal credential-wrapping setup to function.
+- This repo follows Trunk-Based Development: one long-lived branch (`main`), every
+  other branch short-lived and merged back via PR. There's no `develop` branch, no
+  release branch — just `main` and whatever worktree you're currently working in.
+- Release tags are cut automatically from qualifying merges to `main` — there's no
+  manual release step to run. They exist so self-hosters have a known-good version to
+  pin to; they don't gate or delay the maintainer's own continuous deployment, which
+  tracks `main` HEAD directly (the PR review your change just went through is already
+  that gate).
+
+```mermaid
+flowchart LR
+    A["Feature branch<br/>(worktree, short-lived)"] -->|"PR: review + CI required"| B(("main<br/>(single trunk)"))
+    B -->|"every merge"| C["Vercel: continuous<br/>production deploy"]
+    B -->|"qualifying merge<br/>(feat / fix)"| D["Semver tag +<br/>GitHub Release"]
+    D -.->|"pin point,<br/>not a gate"| E["Self-hosters"]
+```
 
 Full rationale: [`.policy/git.md`](.policy/git.md).
 
