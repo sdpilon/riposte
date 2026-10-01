@@ -1,6 +1,9 @@
 entry-description.md
 CLAUDE.local.md
 
+# agent worktrees (GIT-3)
+/.claude/worktrees/
+
 # dependencies
 /node_modules
 /.pnp
