@@ -56,10 +56,11 @@ system staying intact.
 - Don't hand-maintain status of Development Practices bullets anywhere (memory, docs,
   comments) — `process-hygiene`-labeled GitHub issues are the only source of truth for
   what's currently unmet. See `.policy/compliance-audit.md`.
-- Branch protection for `main` is managed via a checked-in ruleset file, applied/diffed
-  only by the maintainer in their own broader-scoped session — never attempt to read
-  or modify live branch-protection state with this repo's day-to-day credentials. See
-  `.policy/branch-protection.md`.
+- Branch protection for `main` is managed via a checked-in ruleset file. Changing or
+  applying it is always the maintainer's own broader-scoped session — never attempt
+  that with this repo's day-to-day credentials. Reading/verifying its current state
+  is fine with day-to-day credentials, provided the PAT in use actually carries
+  `administration:read`. See `.policy/branch-protection.md`.
 
 ## Visibility
 
