@@ -63,9 +63,9 @@ Full rationale: [`.policy/github.md`](.policy/github.md).
 ## Keeping process commitments honest
 
 CI includes a non-blocking check, on pushes to `main`, that a handful of foundational
-practices — release automation, self-host packaging, security hardening for external
-content, the demo path, no hardcoded identities, the committed-vs-personal boundary —
-still hold. Any gap it finds becomes a GitHub issue labeled `process-hygiene`; that
+practices — release automation, self-host packaging, self-host documentation,
+security hardening for external content, the demo path, no hardcoded identities, the
+committed-vs-personal boundary — still hold. Any gap it finds becomes a GitHub issue labeled `process-hygiene`; that
 label is the current source of truth for what's outstanding.
 
 `main`'s branch protection is a checked-in ruleset rather than a page in GitHub's UI.
