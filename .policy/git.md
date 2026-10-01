@@ -77,12 +77,22 @@ inside an already-scoped piece of work.
 
 ## Authentication
 
-**GIT-6**: Git and GitHub operations MUST use only the operator's own ambient
-credentials (whatever's already configured on their machine — an SSH key, `gh auth
-login`) and MUST NOT depend on a credential embedded in the repo, a repo-local
-script, or a personal alias.
+**GIT-6**: This repository's own scripts, CI configuration, and documented setup
+process MUST NOT depend on a credential embedded in the repo or on any personal
+credential-wrapping setup (an alias, a wrapper script) to function — only on the
+operator's own directly-configured ambient credentials (an SSH key, a plain `gh auth
+login`/PAT). This constrains what the *repo* is allowed to require, not what tooling
+an agent or the operator may use to manage a live session's own credential state:
+using the operator's own personal credential-management scripts (living outside the
+repo) to authenticate a session is the operator using their own tooling, not the
+repo depending on it.
 
 Rationale: a project meant to be self-hosted has to work for someone who's never
-heard of the original maintainer's personal credential-wrapping setup. See
+heard of the original maintainer's personal credential-wrapping setup — that's a
+constraint on the repo's own self-sufficiency, not a restriction on what tooling an
+agent or operator may use to manage a live session's credentials. Misreading this as
+"never use any personal credential tooling, even the operator's own, for anything"
+would block the operator's own ambient auth-switching scripts from ever fixing a
+broken session — the opposite of what this rule is for. See
 `engineering-practices.md`'s "Credential and access scoping" section for the
 incident this generalizes from.

@@ -46,7 +46,9 @@ Full rationale: [`.policy/git.md`](.policy/git.md).
 
 ## Opening a pull request
 
-Every change — including a one-line doc fix — goes through a pull request. Pushing a
+Every change — including a one-line doc fix — goes through a pull request. That's a
+constraint on commits never skipping a PR, not on how many commits one PR holds — a
+PR can be a single commit or several related ones batched together. Pushing a
 branch doesn't by itself mean it's time to open the PR — that's always a separate
 decision, never assumed just because a branch exists.
 
@@ -63,14 +65,15 @@ Full rationale: [`.policy/github.md`](.policy/github.md).
 ## Keeping process commitments honest
 
 CI includes a non-blocking check, on pushes to `main`, that a handful of foundational
-practices — release automation, self-host packaging, security hardening for external
-content, the demo path, no hardcoded identities, the committed-vs-personal boundary —
-still hold. Any gap it finds becomes a GitHub issue labeled `process-hygiene`; that
+practices — release automation, self-host packaging, self-host documentation,
+security hardening for external content, the demo path, no hardcoded identities, the
+committed-vs-personal boundary — still hold. Any gap it finds becomes a GitHub issue labeled `process-hygiene`; that
 label is the current source of truth for what's outstanding.
 
 `main`'s branch protection is a checked-in ruleset rather than a page in GitHub's UI.
-Applying or diffing it needs GitHub admin access, outside what day-to-day credentials
-in this repo carry.
+Changing it always needs the maintainer's own broader-scoped access. Reading or
+verifying its current state doesn't — day-to-day credentials can do that once they
+carry read-only GitHub Administration access.
 
 Full rationale: [`.policy/compliance-audit.md`](.policy/compliance-audit.md),
 [`.policy/branch-protection.md`](.policy/branch-protection.md).

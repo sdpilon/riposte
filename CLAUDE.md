@@ -25,8 +25,12 @@ system staying intact.
   to date with `origin/main`, no stray branches or worktrees.
 - Ask before creating a new top-level file or directory convention. Don't ask for a
   file that's obviously part of already-approved work.
-- Use only the operator's own ambient credentials for git/GitHub operations — never
-  read from or depend on a repo-local secret, script, or personal alias.
+- This repo's own setup, scripts, and CI must never depend on a credential embedded
+  in it or on a personal credential-wrapping setup to function — only on the
+  operator's own directly-configured ambient credentials. That's a constraint on the
+  repo, not on me: using the operator's own personal credential-management tooling
+  (e.g. `gh-env`/`op-env`, living outside the repo) to fix my own session's
+  git/GitHub auth is fine.
 - Trunk-Based Development: `main` is the only long-lived branch. Never create or
   propose a second long-lived branch (`develop`, a release branch, etc.) — route
   everything through a short-lived worktree branch and a PR instead.
@@ -40,7 +44,9 @@ system staying intact.
 
 ## GitHub
 
-- Every commit goes through a PR, no exceptions by file type.
+- Every commit goes through a PR, no exceptions by file type — but that's no
+  constraint on cardinality: batch related commits into one PR when useful, or use a
+  single-commit PR, either is fine.
 - Before opening: run the full local quality gate (type-check, lint, format, test) —
   same commands as CI — and confirm green.
 - Draft the PR body from `.github/PULL_REQUEST_TEMPLATE.md`, filled in section by
@@ -56,10 +62,11 @@ system staying intact.
 - Don't hand-maintain status of Development Practices bullets anywhere (memory, docs,
   comments) — `process-hygiene`-labeled GitHub issues are the only source of truth for
   what's currently unmet. See `.policy/compliance-audit.md`.
-- Branch protection for `main` is managed via a checked-in ruleset file, applied/diffed
-  only by the maintainer in their own broader-scoped session — never attempt to read
-  or modify live branch-protection state with this repo's day-to-day credentials. See
-  `.policy/branch-protection.md`.
+- Branch protection for `main` is managed via a checked-in ruleset file. Changing or
+  applying it is always the maintainer's own broader-scoped session — never attempt
+  that with this repo's day-to-day credentials. Reading/verifying its current state
+  is fine with day-to-day credentials, provided the PAT in use actually carries
+  `administration:read`. See `.policy/branch-protection.md`.
 
 ## Visibility
 
