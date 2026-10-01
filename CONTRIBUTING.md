@@ -46,7 +46,9 @@ Full rationale: [`.policy/git.md`](.policy/git.md).
 
 ## Opening a pull request
 
-Every change — including a one-line doc fix — goes through a pull request. Pushing a
+Every change — including a one-line doc fix — goes through a pull request. That's a
+constraint on commits never skipping a PR, not on how many commits one PR holds — a
+PR can be a single commit or several related ones batched together. Pushing a
 branch doesn't by itself mean it's time to open the PR — that's always a separate
 decision, never assumed just because a branch exists.
 

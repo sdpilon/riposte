@@ -40,7 +40,9 @@ system staying intact.
 
 ## GitHub
 
-- Every commit goes through a PR, no exceptions by file type.
+- Every commit goes through a PR, no exceptions by file type — but that's no
+  constraint on cardinality: batch related commits into one PR when useful, or use a
+  single-commit PR, either is fine.
 - Before opening: run the full local quality gate (type-check, lint, format, test) —
   same commands as CI — and confirm green.
 - Draft the PR body from `.github/PULL_REQUEST_TEMPLATE.md`, filled in section by
