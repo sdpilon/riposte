@@ -25,8 +25,12 @@ system staying intact.
   to date with `origin/main`, no stray branches or worktrees.
 - Ask before creating a new top-level file or directory convention. Don't ask for a
   file that's obviously part of already-approved work.
-- Use only the operator's own ambient credentials for git/GitHub operations — never
-  read from or depend on a repo-local secret, script, or personal alias.
+- This repo's own setup, scripts, and CI must never depend on a credential embedded
+  in it or on a personal credential-wrapping setup to function — only on the
+  operator's own directly-configured ambient credentials. That's a constraint on the
+  repo, not on me: using the operator's own personal credential-management tooling
+  (e.g. `gh-env`/`op-env`, living outside the repo) to fix my own session's
+  git/GitHub auth is fine.
 - Trunk-Based Development: `main` is the only long-lived branch. Never create or
   propose a second long-lived branch (`develop`, a release branch, etc.) — route
   everything through a short-lived worktree branch and a PR instead.
