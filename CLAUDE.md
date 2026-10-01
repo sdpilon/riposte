@@ -27,6 +27,16 @@ system staying intact.
   file that's obviously part of already-approved work.
 - Use only the operator's own ambient credentials for git/GitHub operations — never
   read from or depend on a repo-local secret, script, or personal alias.
+- Trunk-Based Development: `main` is the only long-lived branch. Never create or
+  propose a second long-lived branch (`develop`, a release branch, etc.) — route
+  everything through a short-lived worktree branch and a PR instead.
+- Release tags are cut automatically from qualifying merges to `main` — no manual
+  release step, no separate release branch/PR. Whatever tool implements this (CA-1)
+  must only push tags, never a commit back to `main`, or it'll conflict with branch
+  protection. They're for self-hosters to pin to, not a gate on the maintainer's own
+  deployment: don't wire anything that makes the maintainer's own Vercel production
+  deploy wait on a release tag being cut — it already deploys continuously from `main`
+  HEAD, gated by the PR review each merge went through.
 
 ## GitHub
 
