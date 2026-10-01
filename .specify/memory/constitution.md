@@ -1,19 +1,28 @@
 <!--
 Sync Impact Report
-- Version change: 1.1.0 → 1.2.0
-- Modified principles: none renamed
-- Added sections:
-  - Development Practices: new bullet, "A committed-vs-personal boundary is
-    decided from day one, not discovered through friction" — promoted from a
-    lesson in repo-rater's own project memory (not engineering-practices.md or
-    tool-notes.md). Repo-rater's unclear boundary between tracked project docs
-    and untracked personal-process docs (CLAUDE.md vs CLAUDE.local.md,
-    settings.json vs settings.local.json) was one of three named frustrations
-    that triggered rebuilding as riposte in the first place, but the lesson
-    itself was never distilled into a portable principle until now.
-- Removed sections: none
-- Templates requiring updates: none checked in this run — dependent templates/commands
-  read this file at runtime and are out of scope for /speckit-constitution itself.
+- Version change: 1.2.0 → 1.3.0
+- Modified principles: none renamed or redefined
+- Modified sections:
+  - Development Practices: replaced 8 inline bullets with a pointer to
+    .policy/compliance-audit.md (CA-1..CA-7) and .policy/branch-protection.md
+    (BP-1, BP-2), which now own this content with a real, ongoing compliance
+    mechanism (a CI-driven audit for self-checkable obligations, plus a
+    human-verified checked-in ruleset for branch protection) — the inline
+    prose had no equivalent to Principles' Compliance Review and had already
+    drifted from repo state by the time this was caught (2 known gaps plus 2
+    more found via an unprompted audit).
+  - Governance / Compliance review: removed an incorrect citation ("per
+    Principle IV (\"Development Practices\")" — Principle IV is actually
+    "Minimal Setup Friction, Smart Defaults"; Development Practices was never
+    a numbered Principle). Added a sentence naming the separate mechanism
+    that now checks Development Practices obligations, so the gap this
+    citation bug helped obscure doesn't reopen silently.
+- Added sections: none
+- Removed sections: none (Development Practices retained as a section, content
+  relocated)
+- Templates requiring updates: none checked in this run — dependent
+  templates/commands read this file at runtime and are out of scope for
+  /speckit-constitution itself.
 - Follow-up TODOs: none.
 -->
 
@@ -107,36 +116,13 @@ model this tool exists to avoid.
 
 ## Development Practices
 
-- **An automated quality gate blocks every merge from day one** — type-checking,
-  linting, formatting, and tests, run the same way locally and in CI, before there's
-  meaningful code for it to have caught up to.
-- **A branch-protected trunk with CI-required pull requests from day one.** No
-  direct pushes to the main line, even early, even for the person building it alone.
-- **Release and versioning are automated from early on.** Version bumps and
-  changelogs come from commit history, not a manually-remembered tagging ritual that
-  someone has to recall how to do correctly months later.
-- **Self-host packaging is designed in alongside the primary deployment, not
-  retrofitted after.** A from-scratch self-hoster's path to running this should be a
-  first-class concern from early in the project, not something addressed once the
-  maintainer's own instance already works a different way.
-- **Security-relevant hardening is a day-one requirement, not an audit finding.**
-  Anywhere the tool renders untrusted external content (a repo's README) or handles
-  credentials, the hardening work happens when that feature is built, not after a
-  gap is later discovered.
-- **A fake-data / demo path exists from early on.** The product should be evaluable
-  — by the builder, and by anyone else — without live credentials, from early in
-  development, not added late once real usage already depends on real credentials.
-- **Audit for hardcoded personal-identity strings, not just secrets.** A username,
-  account handle, or email baked directly into UI text or a default value undermines
-  the self-hosted and credential-free-demo commitments (Principles I, VI) even when
-  no actual secret is exposed — it silently deanonymizes the original author on an
-  instance meant to be someone else's, or a demo meant to hold no one's real data.
-- **A committed-vs-personal boundary is decided from day one, not discovered
-  through friction.** What's tracked in the repo is project knowledge anyone
-  self-hosting or collaborating needs; personal process, machine-specific tooling,
-  and individual credential-wrapping habits stay in gitignored local-only files
-  from the start (e.g., a local-only settings/config split), not retrofitted after
-  they've already tangled together.
+Foundational engineering practices — quality gates, release automation, self-host
+packaging, security hardening, and related process hygiene — are defined and kept
+current in this repo's `.policy/` layer, not duplicated here:
+[`.policy/compliance-audit.md`](../../.policy/compliance-audit.md) (CA-1 through
+CA-7) and [`.policy/branch-protection.md`](../../.policy/branch-protection.md)
+(BP-1, BP-2). `process-hygiene`-labeled GitHub issues are the live record of what's
+currently unmet — never restated here.
 
 ## Success Criteria
 
@@ -163,9 +149,12 @@ using semantic versioning:
 - PATCH — clarifications, wording, typo fixes, non-semantic refinements.
 
 **Compliance review**: every feature or plan MUST be checked against these
-principles before implementation begins (not retrofitted after), per Principle IV
-("Development Practices") of this constitution. Any complexity or exception that
-appears to conflict with a principle MUST be justified explicitly in the relevant
-plan, or the plan MUST be revised instead.
+principles before implementation begins (not retrofitted after). Any complexity or
+exception that appears to conflict with a principle MUST be justified explicitly in
+the relevant plan, or the plan MUST be revised instead. Development Practices
+obligations are checked separately and on an ongoing basis —
+`.policy/compliance-audit.md`'s CI-driven audit for CA-* obligations, and
+`.policy/branch-protection.md`'s human-verified checked-in ruleset for BP-* — not via
+this per-feature review.
 
-**Version**: 1.2.0 | **Ratified**: 2026-09-25 | **Last Amended**: 2026-09-26
+**Version**: 1.3.0 | **Ratified**: 2026-09-25 | **Last Amended**: 2026-09-30

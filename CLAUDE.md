@@ -41,6 +41,16 @@ system staying intact.
 - After opening a PR, always ask whether to monitor it (e.g. CI status) — don't start
   unprompted, don't skip asking.
 
+## Process compliance
+
+- Don't hand-maintain status of Development Practices bullets anywhere (memory, docs,
+  comments) — `process-hygiene`-labeled GitHub issues are the only source of truth for
+  what's currently unmet. See `.policy/compliance-audit.md`.
+- Branch protection for `main` is managed via a checked-in ruleset file, applied/diffed
+  only by the maintainer in their own broader-scoped session — never attempt to read
+  or modify live branch-protection state with this repo's day-to-day credentials. See
+  `.policy/branch-protection.md`.
+
 ## Visibility
 
 Before creating or committing any file: would a stranger picking up this repo cold

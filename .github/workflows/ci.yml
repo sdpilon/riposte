@@ -33,3 +33,19 @@ jobs:
 
       - name: Test
         run: pnpm test
+
+  compliance-audit:
+    name: Compliance audit
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    permissions:
+      issues: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run compliance audit
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bash .github/scripts/policy-audit.sh

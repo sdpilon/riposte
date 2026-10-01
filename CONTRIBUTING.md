@@ -44,6 +44,21 @@ decision, never assumed just because a branch exists.
 
 Full rationale: [`.policy/github.md`](.policy/github.md).
 
+## Keeping process commitments honest
+
+CI includes a non-blocking check, on pushes to `main`, that a handful of foundational
+practices — release automation, self-host packaging, security hardening for external
+content, the demo path, no hardcoded identities, the committed-vs-personal boundary —
+still hold. Any gap it finds becomes a GitHub issue labeled `process-hygiene`; that
+label is the current source of truth for what's outstanding.
+
+`main`'s branch protection is a checked-in ruleset rather than a page in GitHub's UI.
+Applying or diffing it needs GitHub admin access, outside what day-to-day credentials
+in this repo carry.
+
+Full rationale: [`.policy/compliance-audit.md`](.policy/compliance-audit.md),
+[`.policy/branch-protection.md`](.policy/branch-protection.md).
+
 ## Visibility: what goes in this repo
 
 If you're unsure whether something belongs in a committed file: would a stranger

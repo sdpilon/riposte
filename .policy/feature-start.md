@@ -1,15 +1,19 @@
 # Feature-Start Policy
 
-**Anything that adds or changes product behavior goes through the full Spec Kit
-flow** — `speckit-specify` → `speckit-clarify` → `speckit-plan` → `speckit-tasks` →
-`speckit-implement` — checked against `constitution.md` before implementation begins,
-per its own Compliance Review clause.
+**FS-1**: Anything that adds or changes product behavior MUST go through the full
+Spec Kit flow — `speckit-specify` → `speckit-clarify` → `speckit-plan` →
+`speckit-tasks` → `speckit-implement` — checked against `constitution.md` before
+implementation begins, per its own Compliance Review clause.
 
-**A trivial fix with no behavior ambiguity skips straight to a normal commit** — a
-typo, a one-line bug fix with an obviously correct resolution, anything where writing
-a spec first would only restate the diff. This mirrors the bounded-vs-architectural
-distinction already used when brainstorming new work: when in doubt, take the heavier
-path (write the spec) rather than assume something is trivial.
+**FS-2**: A trivial fix with no behavior ambiguity (a typo, a one-line bug fix with
+an obviously correct resolution, anything where writing a spec first would only
+restate the diff) MUST skip the full Spec Kit flow and go straight to a normal
+commit.
+
+**FS-3**: When genuinely unsure whether a change is trivial, it MUST be treated as
+non-trivial and go through the full Spec Kit flow — mirrors the bounded-vs-
+architectural distinction already used when brainstorming new work: when in doubt,
+take the heavier path.
 
 Rationale: Spec Kit's whole value is forcing product decisions to be made and written
 down before code exists — skipping it for anything with real behavioral ambiguity
