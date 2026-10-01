@@ -14,6 +14,12 @@ no test fails, no lint catches it. That's the entire reason this skill exists: i
 checking for a category of error that's invisible unless someone (or something) goes
 looking.
 
+This is the deliberate second step after `policy-add`, which only ever writes
+`.policy/<topic>.md` and stops — it never touches `CONTRIBUTING.md`/`CLAUDE.md`
+itself, by design, precisely so that propagating a policy change is its own
+reviewable unit of work rather than bundled into the decision to make the change.
+Every `policy-add` run leaves this skill something to do.
+
 ## How to find what should match what
 
 Each `.policy/<topic>.md` is referenced from `CONTRIBUTING.md` and `CLAUDE.md`
