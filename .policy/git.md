@@ -44,7 +44,7 @@ branch, or similar).
 
 ```mermaid
 flowchart LR
-    A["Feature branch<br/>(worktree, short-lived)"] -->|"PR: review + CI required<br/>(GIT-3/GIT-4, BP-1)"| B(("main<br/>(single trunk)"))
+    A["Feature branch<br/>(short-lived; worktree if isolated)"] -->|"PR: review + CI required<br/>(GIT-3/GIT-4, BP-1)"| B(("main<br/>(single trunk)"))
     B -->|"every merge"| C["Vercel: continuous<br/>production deploy"]
     B -->|"qualifying merge<br/>(feat / fix)"| D["Semver tag +<br/>GitHub Release"]
     D -.->|"pin point,<br/>not a gate"| E["Self-hosters<br/>(incl. the maintainer's<br/>own self-hosted runs)"]
