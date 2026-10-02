@@ -39,9 +39,9 @@ system staying intact.
   everything through a short-lived branch and a PR instead (a worktree only when
   that work needs isolation).
 - Release tags are cut automatically from qualifying merges to `main` — no manual
-  release step, no separate release branch/PR. Whatever tool implements this (CA-1)
-  must only push tags, never a commit back to `main`, or it'll conflict with branch
-  protection. They're for self-hosters to pin to, not a gate on the maintainer's own
+  release step, no separate release branch/PR. Whatever tool implements CA-1 must
+  only push tags, never a commit back to `main`, or it'll conflict with BP-1. They're
+  for self-hosters to pin to, not a gate on the maintainer's own
   deployment: don't wire anything that makes the maintainer's own Vercel production
   deploy wait on a release tag being cut — it already deploys continuously from `main`
   HEAD, gated by the PR review each merge went through.
