@@ -15,15 +15,25 @@ fragmenting one change into many, both break that.
 
 ## Worktrees and branches
 
-**GIT-3**: Any change destined for a branch and a PR MUST get its own worktree.
+**GIT-3**: A worktree MUST be used only when work needs isolation from something
+concurrent — running multiple tasks or agents in parallel, or deliberately
+preserving a line of work to return to while switching away to something else
+mid-session. Ordinary sequential solo work MAY use a plain branch checked out
+directly in the main checkout instead; it still needs its own branch and goes
+through its own PR (GH-1) either way — a worktree is about workspace isolation, not
+a precondition for branching or for opening a PR.
 
-**GIT-4**: A branch or worktree MUST NOT outlive its merged PR — deleting both is
-part of the same action as merging, never a separate cleanup step, never left "just
-in case."
+**GIT-4**: A branch or worktree MUST NOT outlive the task it was created for —
+deleted in the same action as merging (if the work landed) or abandoning (if the
+work was discarded), never a separate cleanup step, never left "just in case."
 
-Rationale: the expected end state after any completed piece of work is a clean
-`main` — up to date with `origin/main`, nothing to commit, no stray branches or
-worktrees.
+Rationale: the expected end state after any completed or abandoned piece of work is
+a clean `main` — up to date with `origin/main`, nothing to commit, no stray branches
+or worktrees. GIT-3's worktree requirement exists to isolate genuinely concurrent
+work from the main checkout, not to force a dedicated workspace — and a fresh
+worktree+branch for every single task, regardless of whether anything else is
+running concurrently, was pushing toward a fresh PR per task too (see GH-1), which
+was never the intent.
 
 ## Branching model
 

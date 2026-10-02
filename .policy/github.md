@@ -5,16 +5,19 @@
 **GH-1**: Every commit MUST go through a pull request — no exceptions by file type.
 A one-line doc fix goes through a PR exactly like application code does. This says
 nothing about how many commits a PR carries: a single PR MAY hold just one commit or
-several related ones batched together — the obligation is only that no commit
-reaches `main` outside a PR, never a constraint on PR-to-commit cardinality in either
+several batched together, whether or not those commits are related to each other —
+the only constraint is that each individual commit still satisfies GIT-1 (one
+logical, coherent change) on its own. The obligation is that no commit reaches
+`main` outside a PR, never a constraint on PR-to-commit cardinality in either
 direction.
 
 Rationale: Constitution Development Practices already commits to "a branch-protected
 trunk with CI-required pull requests from day one, ... even for the person building it
 alone." Real branch protection is binary at the repo level, so the policy is too.
-Batching several related commits into one PR is a legitimate way to cut merge
-overhead without weakening that gate, but it's an option, not a requirement — a
-single-commit PR is just as compliant as a batched one.
+Batching several commits into one PR — related or not — is a legitimate way to cut
+merge overhead (one CI run, one preview deploy, one manual merge instead of several)
+without weakening that gate, but it's an option, not a requirement — a single-commit
+PR is just as compliant as a batched one.
 
 ## Opening a PR is its own authorization
 
