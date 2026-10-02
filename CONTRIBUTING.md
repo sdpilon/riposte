@@ -61,7 +61,8 @@ decision, never assumed just because a branch exists.
 1. Run the full local quality gate (type-check, lint, format, test) — the same
    commands CI runs — and confirm it's green before opening.
 2. Fill out `.github/PULL_REQUEST_TEMPLATE.md` section by section against what
-   actually changed. Don't write a freeform description instead.
+   actually changed. Don't write a freeform description instead. Write the body
+   to a temp file and pass it via `--body-file`, not an inline heredoc.
 3. Open the PR against `main`.
 4. A human merges every PR, always — never an automated process, regardless of CI
    status.
