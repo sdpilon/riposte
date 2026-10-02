@@ -66,11 +66,14 @@ system staying intact.
 - Don't hand-maintain status of Development Practices bullets anywhere (memory, docs,
   comments) — `process-hygiene`-labeled GitHub issues are the only source of truth for
   what's currently unmet. See `.policy/compliance-audit.md`.
-- Branch protection for `main` is managed via a checked-in ruleset file. Changing or
-  applying it is always the maintainer's own broader-scoped session — never attempt
-  that with this repo's day-to-day credentials. Reading/verifying its current state
-  is fine with day-to-day credentials, provided the PAT in use actually carries
-  `administration:read`. See `.policy/branch-protection.md`.
+- Branch protection for `main` is managed via a checked-in ruleset file, and
+  requires approval from an identity distinct from whoever opened the PR before it
+  can merge — not just a written instruction trusted to be followed. Changing or
+  applying the ruleset itself is always the maintainer's own broader-scoped
+  session — never attempt that with this repo's day-to-day credentials.
+  Reading/verifying its current state is fine with day-to-day credentials,
+  provided the PAT in use actually carries `administration:read`. See
+  `.policy/branch-protection.md`.
 
 ## Visibility
 
@@ -78,4 +81,10 @@ Before creating or committing any file: would a stranger picking up this repo co
 find it useful, or need it? If no, it doesn't belong in a committed file — see
 `.policy/visibility.md`. Durable-but-personal content goes in `CLAUDE.local.md`
 (gitignored); anything not yet settled stays in session/project memory until it's an
-actual decided policy, not this file.
+actual decided policy, not this file. Secrets and credentials must never touch any
+file, public or private — not even `CLAUDE.local.md`. When a memory entry graduates
+into `.policy/`, `CONTRIBUTING.md`, or this file, delete it from memory (or
+collapse it to a one-line pointer) in the same change, so the two don't quietly
+drift apart. Purely agent-collaboration-style feedback or genuinely ephemeral state
+never graduates out of memory, no matter how settled — neither is something a
+human reader of this repo needs.
