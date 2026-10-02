@@ -17,9 +17,13 @@ for the same rules in agent-operational form — this document is the narrative 
 
 - One logical change per commit; write messages in Conventional Commits style
   (`type(scope): summary`), a single line unless a body is genuinely needed.
-- Any branch/PR-bound work gets its own worktree.
-- When a PR merges, delete its branch and worktree in the same action. The expected
-  end state after finishing any piece of work is a clean `main`: up to date with
+- A worktree is for isolating genuinely concurrent work — parallel tasks, or keeping
+  a line of work on hold while you switch to something else. Ordinary sequential
+  work can just use a plain branch in your main checkout; either way it gets its own
+  branch and its own PR.
+- When a PR merges, or when you abandon the work instead, delete its branch (and
+  worktree, if you used one) in the same action. The expected end state after
+  finishing or abandoning any piece of work is a clean `main`: up to date with
   `origin/main`, nothing to commit, nothing left behind.
 - Ask before adding a new top-level file or directory convention; a file that's
   obviously part of already-approved work doesn't need a separate ask.
@@ -27,7 +31,8 @@ for the same rules in agent-operational form — this document is the narrative 
   this repo should ever need a personal credential-wrapping setup to function.
 - This repo follows Trunk-Based Development: one long-lived branch (`main`), every
   other branch short-lived and merged back via PR. There's no `develop` branch, no
-  release branch — just `main` and whatever worktree you're currently working in.
+  release branch — just `main` and whatever branch you're currently working on (a
+  worktree only if that work needs isolation).
 - Release tags are cut automatically from qualifying merges to `main` — there's no
   manual release step to run. They exist so self-hosters have a known-good version to
   pin to; they don't gate or delay the maintainer's own continuous deployment, which
@@ -36,7 +41,7 @@ for the same rules in agent-operational form — this document is the narrative 
 
 ```mermaid
 flowchart LR
-    A["Feature branch<br/>(worktree, short-lived)"] -->|"PR: review + CI required"| B(("main<br/>(single trunk)"))
+    A["Feature branch<br/>(short-lived; worktree if isolated)"] -->|"PR: review + CI required"| B(("main<br/>(single trunk)"))
     B -->|"every merge"| C["Vercel: continuous<br/>production deploy"]
     B -->|"qualifying merge<br/>(feat / fix)"| D["Semver tag +<br/>GitHub Release"]
     D -.->|"pin point,<br/>not a gate"| E["Self-hosters"]
@@ -48,7 +53,8 @@ Full rationale: [`.policy/git.md`](.policy/git.md).
 
 Every change — including a one-line doc fix — goes through a pull request. That's a
 constraint on commits never skipping a PR, not on how many commits one PR holds — a
-PR can be a single commit or several related ones batched together. Pushing a
+PR can be a single commit or several batched together, related or not — each
+commit just needs to be its own coherent change. Pushing a
 branch doesn't by itself mean it's time to open the PR — that's always a separate
 decision, never assumed just because a branch exists.
 
