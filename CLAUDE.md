@@ -19,10 +19,13 @@ system staying intact.
 
 - One logical change per commit. Conventional Commits style, single line unless a
   body is genuinely necessary.
-- Any branch/PR-bound work: create a worktree first.
-- On merge: delete the branch and worktree in the same action, not a separate later
-  step. End state after any completed work: `git status` reports a clean `main`, up
-  to date with `origin/main`, no stray branches or worktrees.
+- A worktree is only for isolating concurrent work (parallel tasks, or holding a
+  line of work while switching away). Ordinary sequential work: a plain branch in
+  the main checkout is fine — either way it gets its own branch and its own PR.
+- On merge, or on abandoning the work instead: delete the branch (and worktree, if
+  one was used) in the same action, not a separate later step. End state after
+  finishing or abandoning any work: `git status` reports a clean `main`, up to date
+  with `origin/main`, no stray branches or worktrees.
 - Ask before creating a new top-level file or directory convention. Don't ask for a
   file that's obviously part of already-approved work.
 - This repo's own setup, scripts, and CI must never depend on a credential embedded
@@ -33,7 +36,8 @@ system staying intact.
   git/GitHub auth is fine.
 - Trunk-Based Development: `main` is the only long-lived branch. Never create or
   propose a second long-lived branch (`develop`, a release branch, etc.) — route
-  everything through a short-lived worktree branch and a PR instead.
+  everything through a short-lived branch and a PR instead (a worktree only when
+  that work needs isolation).
 - Release tags are cut automatically from qualifying merges to `main` — no manual
   release step, no separate release branch/PR. Whatever tool implements this (CA-1)
   must only push tags, never a commit back to `main`, or it'll conflict with branch
@@ -45,8 +49,8 @@ system staying intact.
 ## GitHub
 
 - Every commit goes through a PR, no exceptions by file type — but that's no
-  constraint on cardinality: batch related commits into one PR when useful, or use a
-  single-commit PR, either is fine.
+  constraint on cardinality: batch commits into one PR when useful, related or not,
+  or use a single-commit PR, either is fine.
 - Before opening: run the full local quality gate (type-check, lint, format, test) —
   same commands as CI — and confirm green.
 - Draft the PR body from `.github/PULL_REQUEST_TEMPLATE.md`, filled in section by
