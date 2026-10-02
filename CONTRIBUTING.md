@@ -76,9 +76,11 @@ security hardening for external content, the demo path, no hardcoded identities,
 committed-vs-personal boundary — still hold. Any gap it finds becomes a GitHub issue labeled `process-hygiene`; that
 label is the current source of truth for what's outstanding.
 
-`main`'s branch protection is a checked-in ruleset rather than a page in GitHub's UI.
-Changing it always needs the maintainer's own broader-scoped access. Reading or
-verifying its current state doesn't — day-to-day credentials can do that once they
+`main`'s branch protection is a checked-in ruleset rather than a page in GitHub's UI,
+and it technically requires approval from someone other than whoever opened the PR
+before a merge can happen — not just a convention everyone's trusted to follow.
+Changing the ruleset always needs the maintainer's own broader-scoped access. Reading
+or verifying its current state doesn't — day-to-day credentials can do that once they
 carry read-only GitHub Administration access.
 
 Full rationale: [`.policy/compliance-audit.md`](.policy/compliance-audit.md),
@@ -88,5 +90,6 @@ Full rationale: [`.policy/compliance-audit.md`](.policy/compliance-audit.md),
 
 If you're unsure whether something belongs in a committed file: would a stranger
 picking up this repo cold find it useful or need it? If yes, commit it. If no, it
-belongs in a gitignored local file or your own notes, not in the repo — see
-[`.policy/visibility.md`](.policy/visibility.md) for the full test.
+belongs in a gitignored local file or your own notes, not in the repo. Secrets and
+credentials are the one exception that never goes in a file at all, committed or
+not. See [`.policy/visibility.md`](.policy/visibility.md) for the full test.

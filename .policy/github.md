@@ -44,6 +44,11 @@ covers the same ground.
 **GH-5**: A PR body MUST be written to a temp file and passed via `--body-file`,
 never an inline heredoc.
 
+Rationale: this is a shell-escaping concern specific to constructing a PR body
+programmatically (a CLI invocation, an agent) — a human typing a description by
+hand has no heredoc-vs-temp-file choice to make. It only needs a home in the
+agent-operational doc, not the human-facing one.
+
 ## Who merges
 
 **GH-6**: A human MUST merge every pull request, always — never automation,
