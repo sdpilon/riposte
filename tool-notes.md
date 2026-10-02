@@ -198,27 +198,6 @@ some of these same lessons also carry.
   blocking merge. A dedicated app identity's own installation token
   doesn't carry that suppression.
 
-### PR-opening procedure
-
-(Generic shape, adapted from what repo-rater converged on — the
-machine/personal-auth-routing half of this stays local to whatever
-project reuses it, not repeated here.)
-
-1. Target the trunk branch directly unless a project deliberately uses a
-   release-batching branch — and if release automation (see below)
-   handles batching already, it shouldn't.
-2. Draft the PR body from the repo's actual PR template, filled in
-   section by section against what really changed — never freeform,
-   even when it feels like it covers the same ground.
-3. Write the body to a temp file and pass it via a file-based flag
-   (`--body-file` or equivalent) rather than an inline heredoc — an
-   escaping/formatting slip in a heredoc body is a real, recurring
-   failure mode; a file avoids it entirely.
-4. Never open a PR unasked just because a branch was pushed — those are
-   two separate authorizations.
-5. Never merge, regardless of CI status or how trivial the change looks
-   — see the merge-gate lesson in `engineering-practices.md`.
-
 ### Release-please (or equivalent trunk-based release automation)
 
 - The mechanism: a single workflow triggered on every push to the
