@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 Agent-operational form of this repo's process policies. `CONTRIBUTING.md` is the
-human-readable narrative of the same rules; `.policy/*.md` are the underlying
+human-readable narrative of the same rules; `.policy/rule/*.md` are the underlying
 policies with their rationale. This file exists specifically so these rules persist
 across sessions without depending on this conversation or on Claude's own memory
 system staying intact.
@@ -39,8 +39,8 @@ system staying intact.
   everything through a short-lived branch and a PR instead (a worktree only when
   that work needs isolation).
 - Release tags are cut automatically from qualifying merges to `main` — no manual
-  release step, no separate release branch/PR. Whatever tool implements CA-1 must
-  only push tags, never a commit back to `main`, or it'll conflict with BP-1. They're
+  release step, no separate release branch/PR. Whatever tool implements 003 must
+  only push tags, never a commit back to `main`, or it'll conflict with 001. They're
   for self-hosters to pin to, not a gate on the maintainer's own
   deployment: don't wire anything that makes the maintainer's own Vercel production
   deploy wait on a release tag being cut — it already deploys continuously from `main`
@@ -58,6 +58,9 @@ system staying intact.
 - Never open a PR unasked just because a branch was pushed — separate authorizations.
 - Never merge, regardless of CI status or how trivial the change looks — that's
   always a human decision.
+- Where the platform supports it, merge approval should also be a technical gate
+  (required review from an identity distinct from whoever opened the PR), not only a
+  written instruction.
 - After opening a PR, always ask whether to monitor it (e.g. CI status) — don't start
   unprompted, don't skip asking.
 
@@ -65,7 +68,7 @@ system staying intact.
 
 - Don't hand-maintain status of Development Practices bullets anywhere (memory, docs,
   comments) — `process-hygiene`-labeled GitHub issues are the only source of truth for
-  what's currently unmet. See `.policy/compliance-audit.md`.
+  what's currently unmet. See `.policy/rule/`.
 - Branch protection for `main` is managed via a checked-in ruleset file, and
   requires approval from an identity distinct from whoever opened the PR before it
   can merge — not just a written instruction trusted to be followed. Changing or
@@ -73,13 +76,17 @@ system staying intact.
   session — never attempt that with this repo's day-to-day credentials.
   Reading/verifying its current state is fine with day-to-day credentials,
   provided the PAT in use actually carries `administration:read`. See
-  `.policy/branch-protection.md`.
+  `.policy/rule/`.
+
+- The compliance audit never checks an obligation that needs credentials beyond what CI
+  already holds, which is why the branch-protection obligations are excluded. See
+  `.policy/rule/`.
 
 ## Visibility
 
 Before creating or committing any file: would a stranger picking up this repo cold
 find it useful, or need it? If no, it doesn't belong in a committed file — see
-`.policy/visibility.md`. Durable-but-personal content goes in `CLAUDE.local.md`
+`.policy/rule/`. Durable-but-personal content goes in `CLAUDE.local.md`
 (gitignored); anything not yet settled stays in session/project memory until it's an
 actual decided policy, not this file. Secrets and credentials must never touch any
 file, public or private — not even `CLAUDE.local.md`. When a memory entry graduates

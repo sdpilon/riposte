@@ -1,31 +1,3 @@
-<!--
-Sync Impact Report
-- Version change: 1.2.0 → 1.3.0
-- Modified principles: none renamed or redefined
-- Modified sections:
-  - Development Practices: replaced 8 inline bullets with a pointer to
-    .policy/compliance-audit.md (CA-1..CA-7) and .policy/branch-protection.md
-    (BP-1, BP-2), which now own this content with a real, ongoing compliance
-    mechanism (a CI-driven audit for self-checkable obligations, plus a
-    human-verified checked-in ruleset for branch protection) — the inline
-    prose had no equivalent to Principles' Compliance Review and had already
-    drifted from repo state by the time this was caught (2 known gaps plus 2
-    more found via an unprompted audit).
-  - Governance / Compliance review: removed an incorrect citation ("per
-    Principle IV (\"Development Practices\")" — Principle IV is actually
-    "Minimal Setup Friction, Smart Defaults"; Development Practices was never
-    a numbered Principle). Added a sentence naming the separate mechanism
-    that now checks Development Practices obligations, so the gap this
-    citation bug helped obscure doesn't reopen silently.
-- Added sections: none
-- Removed sections: none (Development Practices retained as a section, content
-  relocated)
-- Templates requiring updates: none checked in this run — dependent
-  templates/commands read this file at runtime and are out of scope for
-  /speckit-constitution itself.
-- Follow-up TODOs: none.
--->
-
 # Riposte Constitution
 
 Riposte measures whether each project in a GitHub account is actually converging on
@@ -119,10 +91,9 @@ model this tool exists to avoid.
 Foundational engineering practices — quality gates, release automation, self-host
 packaging, security hardening, and related process hygiene — are defined and kept
 current in this repo's `.policy/` layer, not duplicated here:
-[`.policy/compliance-audit.md`](../../.policy/compliance-audit.md) (CA-1 through
-CA-7) and [`.policy/branch-protection.md`](../../.policy/branch-protection.md)
-(BP-1, BP-2). `process-hygiene`-labeled GitHub issues are the live record of what's
-currently unmet — never restated here.
+[`.policy/rule/`](../../.policy/rule/) (rules 001–010: the branch-protection and
+compliance-audit obligations). `process-hygiene`-labeled GitHub issues are the live
+record of unmet obligations — never restated here.
 
 ## Success Criteria
 
@@ -152,9 +123,8 @@ using semantic versioning:
 principles before implementation begins (not retrofitted after). Any complexity or
 exception that appears to conflict with a principle MUST be justified explicitly in
 the relevant plan, or the plan MUST be revised instead. Development Practices
-obligations are checked separately and on an ongoing basis —
-`.policy/compliance-audit.md`'s CI-driven audit for CA-* obligations, and
-`.policy/branch-protection.md`'s human-verified checked-in ruleset for BP-* — not via
-this per-feature review.
+obligations are checked separately and on an ongoing basis: rules 001 and 003–008
+and 010 through the CI-driven compliance audit, and rule 002 through the maintainer's
+review of the branch-protection ruleset — not via this per-feature review.
 
-**Version**: 1.3.0 | **Ratified**: 2026-09-25 | **Last Amended**: 2026-09-30
+**Version**: 1.3.2 | **Ratified**: 2026-09-25 | **Last Amended**: 2026-10-03
