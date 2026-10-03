@@ -9,7 +9,7 @@ for the same rules in agent-operational form — this document is the narrative 
 - **Adds or changes product behavior** → work through Spec Kit end to end:
   `speckit-specify`, then `speckit-clarify`, `speckit-plan`, `speckit-tasks`,
   `speckit-implement`. See
-  [`.policy/feature-start.md`](.policy/feature-start.md).
+  [`.policy/rule/`](.policy/rule/).
 - **A trivial, unambiguous fix** (typo, obviously-correct one-line bug fix) → skip
   straight to a normal commit. When in doubt, treat it as the first case.
 
@@ -25,8 +25,6 @@ for the same rules in agent-operational form — this document is the narrative 
   worktree, if you used one) in the same action. The expected end state after
   finishing or abandoning any piece of work is a clean `main`: up to date with
   `origin/main`, nothing to commit, nothing left behind.
-- Ask before adding a new top-level file or directory convention; a file that's
-  obviously part of already-approved work doesn't need a separate ask.
 - Use your own ambient git/GitHub credentials (SSH key, `gh auth login`). Nothing in
   this repo should ever need a personal credential-wrapping setup to function.
 - This repo follows Trunk-Based Development: one long-lived branch (`main`), every
@@ -47,16 +45,14 @@ flowchart LR
     D -.->|"pin point,<br/>not a gate"| E["Self-hosters"]
 ```
 
-Full rationale: [`.policy/git.md`](.policy/git.md).
+Full rationale: [`.policy/rule/`](.policy/rule/).
 
 ## Opening a pull request
 
 Every change — including a one-line doc fix — goes through a pull request. That's a
 constraint on commits never skipping a PR, not on how many commits one PR holds — a
 PR can be a single commit or several batched together, related or not — each
-commit just needs to be its own coherent change. Pushing a
-branch doesn't by itself mean it's time to open the PR — that's always a separate
-decision, never assumed just because a branch exists.
+commit just needs to be its own coherent change.
 
 1. Run the full local quality gate (type-check, lint, format, test) — the same
    commands CI runs — and confirm it's green before opening.
@@ -66,7 +62,7 @@ decision, never assumed just because a branch exists.
 4. A human merges every PR, always — never an automated process, regardless of CI
    status.
 
-Full rationale: [`.policy/github.md`](.policy/github.md).
+Full rationale: [`.policy/rule/`](.policy/rule/).
 
 ## Keeping process commitments honest
 
@@ -76,6 +72,9 @@ security hardening for external content, the demo path, no hardcoded identities,
 committed-vs-personal boundary — still hold. Any gap it finds becomes a GitHub issue labeled `process-hygiene`; that
 label is the current source of truth for what's outstanding.
 
+The audit never checks an obligation that needs credentials beyond what CI already
+holds, so the branch-protection obligations are excluded from it.
+
 `main`'s branch protection is a checked-in ruleset rather than a page in GitHub's UI,
 and it technically requires approval from someone other than whoever opened the PR
 before a merge can happen — not just a convention everyone's trusted to follow.
@@ -83,8 +82,7 @@ Changing the ruleset always needs the maintainer's own broader-scoped access. Re
 or verifying its current state doesn't — day-to-day credentials can do that once they
 carry read-only GitHub Administration access.
 
-Full rationale: [`.policy/compliance-audit.md`](.policy/compliance-audit.md),
-[`.policy/branch-protection.md`](.policy/branch-protection.md).
+Full rationale: [`.policy/rule/`](.policy/rule/).
 
 ## Visibility: what goes in this repo
 
@@ -92,4 +90,5 @@ If you're unsure whether something belongs in a committed file: would a stranger
 picking up this repo cold find it useful or need it? If yes, commit it. If no, it
 belongs in a gitignored local file or your own notes, not in the repo. Secrets and
 credentials are the one exception that never goes in a file at all, committed or
-not. See [`.policy/visibility.md`](.policy/visibility.md) for the full test.
+not. See [`.policy/rule/`](.policy/rule/) for the full test. Agent-collaboration feedback and ephemeral project state stay in
+memory and never graduate into the repo, no matter how settled they become.

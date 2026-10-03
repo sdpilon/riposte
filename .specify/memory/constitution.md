@@ -119,9 +119,8 @@ model this tool exists to avoid.
 Foundational engineering practices — quality gates, release automation, self-host
 packaging, security hardening, and related process hygiene — are defined and kept
 current in this repo's `.policy/` layer, not duplicated here:
-[`.policy/compliance-audit.md`](../../.policy/compliance-audit.md) (CA-1 through
-CA-7) and [`.policy/branch-protection.md`](../../.policy/branch-protection.md)
-(BP-1, BP-2). `process-hygiene`-labeled GitHub issues are the live record of what's
+[`.policy/rule/`](../../.policy/rule/) (rules 001–010: the branch-protection and
+compliance-audit obligations). `process-hygiene`-labeled GitHub issues are the live record of what's
 currently unmet — never restated here.
 
 ## Success Criteria
@@ -153,8 +152,8 @@ principles before implementation begins (not retrofitted after). Any complexity 
 exception that appears to conflict with a principle MUST be justified explicitly in
 the relevant plan, or the plan MUST be revised instead. Development Practices
 obligations are checked separately and on an ongoing basis —
-`.policy/compliance-audit.md`'s CI-driven audit for CA-* obligations, and
-`.policy/branch-protection.md`'s human-verified checked-in ruleset for BP-* — not via
+`.policy/rule/`'s rules 003–010 (CI-driven audit) and 001–002 (human-verified
+checked-in ruleset) — not via
 this per-feature review.
 
 **Version**: 1.3.0 | **Ratified**: 2026-09-25 | **Last Amended**: 2026-09-30
