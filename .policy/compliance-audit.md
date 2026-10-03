@@ -15,27 +15,53 @@ section — ground a claim in current actual state, never in what a prior check 
 Only claims mechanically verifiable from repo content, requiring no credentials
 beyond what CI already has:
 
+## What gets checked: CA-1
+
 **CA-1**: The repository MUST contain release/versioning automation tooling.
 
-**CA-2**: The repository MUST contain self-host packaging (a container/compose
-definition or equivalent).
+Rationale: `engineering-practices.md`'s "Documentation and tracker discipline" section — ground a claim in current actual state, never in what a prior check said.
 
-**CA-3**: The code path that fetches and forwards untrusted external content (e.g. a
-repository README) MUST have sanitization or prompt-injection handling near it.
+## What gets checked: CA-2
+
+**CA-2**: The repository MUST contain self-host packaging (a container/compose definition or equivalent).
+
+Rationale: `engineering-practices.md`'s "Documentation and tracker discipline" section — ground a claim in current actual state, never in what a prior check said.
+
+## What gets checked: CA-3
+
+**CA-3**: The code path that fetches and forwards untrusted external content (e.g. a repository README) MUST have sanitization or prompt-injection handling near it.
+
+Rationale: `engineering-practices.md`'s "Documentation and tracker discipline" section — ground a claim in current actual state, never in what a prior check said.
+
+## What gets checked: CA-4
 
 **CA-4**: The repository MUST provide a credential-free demo or fake-data path.
 
-**CA-5**: Application source (`lib/`, `app/`, `components/`) MUST NOT contain
-hardcoded personal-identity strings.
+Rationale: `engineering-practices.md`'s "Documentation and tracker discipline" section — ground a claim in current actual state, never in what a prior check said.
 
-**CA-6**: Personal/local files (e.g. `CLAUDE.local.md`, `.claude/settings.local.json`)
-MUST exist where expected and MUST remain untracked by git.
+## What gets checked: CA-5
 
-**CA-7**: This check MUST NOT attempt to verify any obligation that requires
-credentials beyond what CI already holds — see
-[`branch-protection.md`](branch-protection.md) for the obligation this excludes.
+**CA-5**: Application source (`lib/`, `app/`, `components/`) MUST NOT contain hardcoded personal-identity strings.
+
+Rationale: `engineering-practices.md`'s "Documentation and tracker discipline" section — ground a claim in current actual state, never in what a prior check said.
+
+## What gets checked: CA-6
+
+**CA-6**: Personal/local files (e.g. `CLAUDE.local.md`, `.claude/settings.local.json`) MUST exist where expected and MUST remain untracked by git.
+
+Rationale: `engineering-practices.md`'s "Documentation and tracker discipline" section — ground a claim in current actual state, never in what a prior check said.
+
+## What gets checked: CA-7
+
+**CA-7**: This check MUST NOT attempt to verify any obligation that requires credentials beyond what CI already holds — see [`branch-protection.md`](branch-protection.md) for the obligation this excludes.
+
+Rationale: `engineering-practices.md`'s "Documentation and tracker discipline" section — ground a claim in current actual state, never in what a prior check said.
+
+## What gets checked: CA-8
 
 **CA-8**: The repository MUST contain self-host documentation.
+
+Rationale: `engineering-practices.md`'s "Documentation and tracker discipline" section — ground a claim in current actual state, never in what a prior check said.
 
 ## How it runs
 
