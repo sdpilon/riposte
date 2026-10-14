@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 Agent-operational form of this repo's process policies. `CONTRIBUTING.md` is the
-human-readable narrative of the same rules; `.policy/rule/*.md` are the underlying
+human-readable narrative of the same rules; `.policy/` are the underlying
 policies with their rationale. This file exists specifically so these rules persist
 across sessions without depending on this conversation or on Claude's own memory
 system staying intact.
@@ -68,7 +68,7 @@ system staying intact.
 
 - Don't hand-maintain status of Development Practices bullets anywhere (memory, docs,
   comments) — `process-hygiene`-labeled GitHub issues are the only source of truth for
-  what's currently unmet. See `.policy/rule/`.
+  what's currently unmet. See `.policy/`.
 - Branch protection for `main` is managed via a checked-in ruleset file, and
   requires approval from an identity distinct from whoever opened the PR before it
   can merge — not just a written instruction trusted to be followed. Changing or
@@ -76,17 +76,17 @@ system staying intact.
   session — never attempt that with this repo's day-to-day credentials.
   Reading/verifying its current state is fine with day-to-day credentials,
   provided the PAT in use actually carries `administration:read`. See
-  `.policy/rule/`.
+  `.policy/`.
 
 - The compliance audit never checks an obligation that needs credentials beyond what CI
   already holds, which is why the branch-protection obligations are excluded. See
-  `.policy/rule/`.
+  `.policy/`.
 
 ## Visibility
 
 Before creating or committing any file: would a stranger picking up this repo cold
 find it useful, or need it? If no, it doesn't belong in a committed file — see
-`.policy/rule/`. Durable-but-personal content goes in `CLAUDE.local.md`
+`.policy/`. Durable-but-personal content goes in `CLAUDE.local.md`
 (gitignored); anything not yet settled stays in session/project memory until it's an
 actual decided policy, not this file. Secrets and credentials must never touch any
 file, public or private — not even `CLAUDE.local.md`. When a memory entry graduates

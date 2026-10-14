@@ -91,7 +91,7 @@ model this tool exists to avoid.
 Foundational engineering practices — quality gates, release automation, self-host
 packaging, security hardening, and related process hygiene — are defined and kept
 current in this repo's `.policy/` layer, not duplicated here:
-[`.policy/rule/`](../../.policy/rule/) (rules 001–010: the branch-protection and
+[`.policy/`](../../.policy/) (rules 001–010: the branch-protection and
 compliance-audit obligations). `process-hygiene`-labeled GitHub issues are the live
 record of unmet obligations — never restated here.
 

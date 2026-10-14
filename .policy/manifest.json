@@ -1,0 +1,10 @@
+{
+  "format_version": 1,
+  "plugin_version": "0.2.0",
+  "files": {
+    ".policy/README.md": {
+      "shipped_version": "0.2.0",
+      "sha256": "8d5947f9831fb76bd03fe590c0bd20469ddc9d6884458d161d0415e0e67976b0"
+    }
+  }
+}
