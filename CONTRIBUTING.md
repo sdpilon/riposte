@@ -1,44 +1,47 @@
 # Contributing to Riposte
 
-Riposte is currently a single-maintainer project, but these procedures hold regardless
-of whether that stays true. If you're an agent working in this repo, see `CLAUDE.md`
-for the same rules in agent-operational form — this document is the narrative version.
+Riposte is currently a single-maintainer project, but these procedures hold
+regardless of whether that stays true. If you're an agent working in this repo,
+see `CLAUDE.md` for the same rules in agent-operational form — this document is
+the narrative version.
 
 ## Before you start: which kind of change is this?
 
 - **Adds or changes product behavior** → work through Spec Kit end to end:
   `speckit-specify`, then `speckit-clarify`, `speckit-plan`, `speckit-tasks`,
   `speckit-implement`.
-- **A trivial, unambiguous fix** (typo, obviously-correct one-line bug fix) → skip
-  straight to a normal commit. When in doubt, treat it as the first case.
+- **A trivial, unambiguous fix** (typo, obviously-correct one-line bug fix) →
+  skip straight to a normal commit. When in doubt, treat it as the first case.
 
 ## Working with git
 
 - One logical change per commit; write messages in Conventional Commits style
   (`type(scope): summary`), a single line unless a body is genuinely needed.
-- A worktree is for isolating genuinely concurrent work — parallel tasks, or keeping
-  a line of work on hold while you switch to something else. Ordinary sequential
-  work can just use a plain branch in your main checkout; either way it gets its own
-  branch and its own PR.
+- A worktree is for isolating genuinely concurrent work — parallel tasks, or
+  keeping a line of work on hold while you switch to something else. Ordinary
+  sequential work can just use a plain branch in your main checkout; either way
+  it gets its own branch and its own PR.
 - When a PR merges, or when you abandon the work instead, delete its branch (and
   worktree, if you used one) in the same action. The expected end state after
   finishing or abandoning any piece of work is a clean `main`: up to date with
   `origin/main`, nothing to commit, nothing left behind.
-- Use your own ambient git/GitHub credentials (SSH key, `gh auth login`). Nothing in
-  this repo should ever need a personal credential-wrapping setup to function.
-- This repo follows Trunk-Based Development: one long-lived branch (`main`), every
-  other branch short-lived and merged back via PR. There's no `develop` branch, no
-  release branch — just `main` and whatever branch you're currently working on (a
-  worktree only if that work needs isolation).
-- Release tags are cut automatically from qualifying merges to `main` — there's no
-  manual release step to run. They exist so self-hosters have a known-good version to
-  pin to; they don't gate or delay the maintainer's own continuous deployment, which
-  tracks `main` HEAD directly (the PR review your change just went through is already
-  that gate).
+- Use your own ambient git/GitHub credentials (SSH key, `gh auth login`).
+  Nothing in this repo should ever need a personal credential-wrapping setup to
+  function.
+- This repo follows Trunk-Based Development: one long-lived branch (`main`),
+  every other branch short-lived and merged back via PR. There's no `develop`
+  branch, no release branch — just `main` and whatever branch you're currently
+  working on (a worktree only if that work needs isolation).
+- Release tags are cut automatically from qualifying merges to `main` — there's
+  no manual release step to run. They exist so self-hosters have a known-good
+  version to pin to; they don't gate or delay the maintainer's own continuous
+  deployment, which tracks `main` HEAD directly (the PR review your change just
+  went through is already that gate).
 
 ```mermaid
 flowchart LR
-    A["Feature branch<br/>(short-lived; worktree if isolated)"] -->|"PR: review + CI required"| B(("main<br/>(single trunk)"))
+    A["Feature branch<br/>(short-lived; worktree if isolated)"]
+    -->|"PR: review + CI required"| B(("main<br/>(single trunk)"))
     B -->|"every merge"| C["Vercel: continuous<br/>production deploy"]
     B -->|"qualifying merge<br/>(feat / fix)"| D["Semver tag +<br/>GitHub Release"]
     D -.->|"pin point,<br/>not a gate"| E["Self-hosters"]
@@ -46,42 +49,50 @@ flowchart LR
 
 ## Opening a pull request
 
-Every change — including a one-line doc fix — goes through a pull request. That's a
-constraint on commits never skipping a PR, not on how many commits one PR holds — a
-PR can be a single commit or several batched together, related or not — each
-commit just needs to be its own coherent change.
+Every change — including a one-line doc fix — goes through a pull request.
+That's a constraint on commits never skipping a PR, not on how many commits one
+PR holds — a PR can be a single commit or several batched together, related or
+not — each commit just needs to be its own coherent change.
 
-1. Run the full local quality gate (type-check, lint, format, test) — the same
-   commands CI runs — and confirm it's green before opening.
-2. Fill out `.github/PULL_REQUEST_TEMPLATE.md` section by section against what
+1. Run the full local quality gate (`pnpm check`: type-check, lint, format,
+   test) — the same commands CI runs — and confirm it's green before opening.
+   Formatting is applied automatically after each file edit
+   (`pnpm exec prettier --write <path>` or `pnpm format`), never deferred to a
+   cleanup pass.
+2. (Automation) Husky's pre-commit hook formats staged files via lint-staged and
+   its pre-push hook runs `pnpm check`; CI runs the same set via `pnpm verify`.
+   Use `--no-verify` only deliberately — CI remains the backstop.
+3. Fill out `.github/PULL_REQUEST_TEMPLATE.md` section by section against what
    actually changed. Don't write a freeform description instead.
-3. Open the PR against `main`.
-4. A human merges every PR, always — never an automated process, regardless of CI
-   status.
+4. Open the PR against `main`.
+5. A human merges every PR, always — never an automated process, regardless of
+   CI status.
 
 ## Keeping process commitments honest
 
-CI includes a non-blocking check, on pushes to `main`, that a handful of foundational
-practices — release automation, self-host packaging, self-host documentation,
-security hardening for external content, the demo path, no hardcoded identities, the
-committed-vs-personal boundary — still hold. Any gap it finds becomes a GitHub issue labeled `process-hygiene`; that
-label is the current source of truth for what's outstanding.
+CI includes a non-blocking check, on pushes to `main`, that a handful of
+foundational practices — release automation, self-host packaging, self-host
+documentation, security hardening for external content, the demo path, no
+hardcoded identities, the committed-vs-personal boundary — still hold. Any gap
+it finds becomes a GitHub issue labeled `process-hygiene`; that label is the
+current source of truth for what's outstanding.
 
-The audit never checks an obligation that needs credentials beyond what CI already
-holds, so the branch-protection obligations are excluded from it.
+The audit never checks an obligation that needs credentials beyond what CI
+already holds, so the branch-protection obligations are excluded from it.
 
-`main`'s branch protection is a checked-in ruleset rather than a page in GitHub's UI,
-and it technically requires approval from someone other than whoever opened the PR
-before a merge can happen — not just a convention everyone's trusted to follow.
-Changing the ruleset always needs the maintainer's own broader-scoped access. Reading
-or verifying its current state doesn't — day-to-day credentials can do that once they
-carry read-only GitHub Administration access.
+`main`'s branch protection is a checked-in ruleset rather than a page in
+GitHub's UI, and it technically requires approval from someone other than
+whoever opened the PR before a merge can happen — not just a convention
+everyone's trusted to follow. Changing the ruleset always needs the maintainer's
+own broader-scoped access. Reading or verifying its current state doesn't —
+day-to-day credentials can do that once they carry read-only GitHub
+Administration access.
 
 ## Visibility: what goes in this repo
 
 If you're unsure whether something belongs in a committed file: would a stranger
-picking up this repo cold find it useful or need it? If yes, commit it. If no, it
-belongs in a gitignored local file or your own notes, not in the repo. Secrets and
-credentials are the one exception that never goes in a file at all, committed or
-not. Agent-collaboration feedback and ephemeral project state stay in
-memory and never graduate into the repo, no matter how settled they become.
+picking up this repo cold find it useful or need it? If yes, commit it. If no,
+it belongs in a gitignored local file or your own notes, not in the repo.
+Secrets and credentials are the one exception that never goes in a file at all,
+committed or not. Agent-collaboration feedback and ephemeral project state stay
+in memory and never graduate into the repo, no matter how settled they become.

@@ -7,10 +7,10 @@ pnpm-lock.yaml
 # Drizzle-generated migration metadata — not hand-authored.
 lib/db/migrations/meta/
 
-# This feature's quality gate covers the application, not the project's
-# pre-existing process docs/spec artifacts, which follow their own
-# conventions (see .policy/, CONTRIBUTING.md) predating this feature.
+# Formatting exclusions: generated/agent-operated content and spec artifacts.
+# Markdown *is* formatted in the tracked root and docs/, but not in these.
+.policy/
 .claude/
 .specify/
+.opencode/
 specs/
-*.md
