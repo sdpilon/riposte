@@ -10,10 +10,13 @@
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "check": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm test",
+    "verify": "pnpm check",
     "test": "vitest run",
     "test:watch": "vitest",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate",
+    "prepare": "husky"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^4.0.65",
@@ -42,10 +45,21 @@
     "eslint": "^9",
     "eslint-config-next": "16.3.6",
     "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.0",
     "prettier": "^3.9.9",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^5.0.2"
   },
-  "packageManager": "pnpm@12.3.4"
+  "packageManager": "pnpm@12.3.4",
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs,json,css,md}": "prettier --write",
+    "ignore": [
+      ".claude/**",
+      ".specify/**",
+      ".opencode/**",
+      "specs/**"
+    ]
+  }
 }
